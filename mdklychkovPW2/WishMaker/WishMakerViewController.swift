@@ -41,8 +41,8 @@ final class WishMakerViewController: UIViewController {
     private let sliderRed = CustomSlider(title: Constants.redLabel, min: Constants.sliderMin, max: Constants.sliderMax)
     private let sliderGreen = CustomSlider(title: Constants.greenLabel, min: Constants.sliderMin, max: Constants.sliderMax)
     private let sliderBlue = CustomSlider(title: Constants.blueLabel, min: Constants.sliderMin, max: Constants.sliderMax)
-    private let buttonRandomize = UIButton()
-    private let buttonToggleSliders = UIButton()
+    private let buttonRandomize = UIButton(type: .system)
+    private let buttonToggleSliders = UIButton(type: .system)
     
     // MARK: - Lifecycle
     init(interactor: BuisnessLogic) {
@@ -72,7 +72,7 @@ final class WishMakerViewController: UIViewController {
     }
     
     @objc
-    private func toggleSliders() {
+    private func buttonToggleSlidersTapped() {
         UIView.animate(withDuration: Constants.toggleSlidersAnimationDuration) {
             for slider in [self.sliderRed, self.sliderGreen, self.sliderBlue] {
                 slider.isHidden.toggle()
@@ -99,7 +99,7 @@ final class WishMakerViewController: UIViewController {
         configureTitle()
         configurateDescription()
         configurateButtonRandomize()
-        configurateLabelToggleSliders()
+        configurateButtonToggleSliders()
         configurateStack()
     }
     
@@ -131,12 +131,16 @@ final class WishMakerViewController: UIViewController {
         buttonRandomize.setTitle(Constants.buttonRandomizeTitle, for: .normal)
         buttonRandomize.backgroundColor = .white
         buttonRandomize.setHeight(Constants.buttonRandomizeHeight)
+        
+        buttonRandomize.addTarget(self, action: #selector(buttonRandomizeTapped), for: .touchUpInside)
     }
     
-    private func configurateLabelToggleSliders() {
+    private func configurateButtonToggleSliders() {
         buttonToggleSliders.configuration = UIButton.Configuration.plain()
         buttonToggleSliders.setTitle(Constants.buttonToggleSlidersTitle, for: .normal)
         buttonToggleSliders.backgroundColor = .white
+        
+        buttonToggleSliders.addTarget(self, action: #selector(buttonToggleSlidersTapped), for: .touchUpInside)
     }
     
     private func configurateStack() {
@@ -151,10 +155,7 @@ final class WishMakerViewController: UIViewController {
             slider.slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
         }
         
-        buttonToggleSliders.addTarget(self, action: #selector(toggleSliders), for: .touchUpInside)
         stackView.addArrangedSubview(buttonToggleSliders)
-        
-        buttonRandomize.addTarget(self, action: #selector(buttonRandomizeTapped), for: .touchUpInside)
         stackView.addArrangedSubview(buttonRandomize)
         
         
