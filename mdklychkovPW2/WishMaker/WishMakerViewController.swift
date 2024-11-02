@@ -208,10 +208,9 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func updateSliders(_ uiColor: UIColor) {
-        let ciColor = CIColor(color: uiColor)
-        sliderRed.slider.setValue(Float(ciColor.red), animated: true)
-        sliderBlue.slider.setValue(Float(ciColor.blue), animated: true)
-        sliderGreen.slider.setValue(Float(ciColor.green), animated: true)
+        sliderRed.slider.setValue(Float(uiColor.red), animated: true)
+        sliderGreen.slider.setValue(Float(uiColor.green), animated: true)
+        sliderBlue.slider.setValue(Float(uiColor.blue), animated: true)
     }
     
     private func updateHexTextField(_ uiColor: UIColor) {
