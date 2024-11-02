@@ -56,11 +56,11 @@ final class Interactor: BuisnessLogic {
         var intColor: Int = hex
         
         // need to parse it into r, g, b segments, from (0 to 16^2 - 1) each
-        let red: Double = Double(intColor % Constants.colorParameterCount) / Double(Constants.colorParameterCount - 1)
+        let blue: Double = Double(intColor % Constants.colorParameterCount) / Double(Constants.colorParameterCount - 1)
         intColor /= Constants.colorParameterCount
         let green: Double = Double(intColor % Constants.colorParameterCount) / Double(Constants.colorParameterCount - 1)
         intColor /= Constants.colorParameterCount
-        let blue: Double = Double(intColor % Constants.colorParameterCount) / Double(Constants.colorParameterCount - 1)
+        let red: Double = Double(intColor % Constants.colorParameterCount) / Double(Constants.colorParameterCount - 1)
         return (red, green, blue)
     }
 }
