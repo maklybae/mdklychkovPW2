@@ -95,7 +95,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     
     @objc
     private func addWishButtonPressed() {
-        
+        navigationController?.pushViewController(WishStoringViewController(), animated: true)
     }
     
     // MARK: - Public funcs
