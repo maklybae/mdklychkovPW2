@@ -5,6 +5,8 @@
 //  Created by Maksim Klychkov on 30.10.2024.
 //
 
+import Foundation
+
 final class Interactor: BuisnessLogic {
     // MARK: - Constants
     private enum Constants {
@@ -30,7 +32,28 @@ final class Interactor: BuisnessLogic {
         // hex color is a number #______
         // need to generate an hex integer (from 0 to (16^6 - 1))
         // 16^6 = (2^4)^6 = 2^24 = 1 << 24
-        var intColor = Int.random(in: 0...(1 << Constants.hexColorBinaryExp))
+        let intColor = Int.random(in: 0...(1 << Constants.hexColorBinaryExp))
+        let (red, green, blue) = extractRGBComponents(from: intColor)
+
+        presenter.presentRandomizedBackgroundColor(WishMaker.RandomizeBackgroundColor.Response(red: red, green: green, blue: blue, alpha: Constants.defaultAlpha))
+    }
+    
+    func setHexColor(_ request: WishMaker.SetHexColor.Request) {
+        // Remove the '#' prefix
+        let hexWithoutPrefix = String(request.hex.dropFirst())
+        
+        // Parse the hex string
+        var intColor: Int64 = 0
+        let scanner = Scanner(string: hexWithoutPrefix)
+        scanner.scanHexInt64(&intColor)
+        
+        let (red, green, blue) = extractRGBComponents(from: Int(intColor))
+        
+        presenter.presentSetHexColor(WishMaker.SetHexColor.Response(red: red, green: green, blue: blue, alpha: Constants.defaultAlpha))
+    }
+    
+    private func extractRGBComponents(from hex: Int) -> (r: Double, g: Double, b: Double) {
+        var intColor: Int = hex
         
         // need to parse it into r, g, b segments, from (0 to 16^2 - 1) each
         let red: Double = Double(intColor % Constants.colorParameterCount) / Double(Constants.colorParameterCount - 1)
@@ -38,7 +61,6 @@ final class Interactor: BuisnessLogic {
         let green: Double = Double(intColor % Constants.colorParameterCount) / Double(Constants.colorParameterCount - 1)
         intColor /= Constants.colorParameterCount
         let blue: Double = Double(intColor % Constants.colorParameterCount) / Double(Constants.colorParameterCount - 1)
-        
-        presenter.presentRandomizedBackgroundColor(WishMaker.RandomizeBackgroundColor.Response(red: red, green: green, blue: blue, alpha: Constants.defaultAlpha))
+        return (red, green, blue)
     }
 }

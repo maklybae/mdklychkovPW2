@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class WishMakerViewController: UIViewController {
+final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Constants
     enum Constants {
         static let viewTitle: String = "WishMaker"
@@ -30,6 +30,10 @@ final class WishMakerViewController: UIViewController {
         
         static let toggleSlidersAnimationDuration: Double = 0.3
         static let buttonToggleSlidersTitle: String = "Toggle Sliders"
+        static let buttonToggleSlidersHeight: CGFloat = 40
+        
+        static let hexTextFieldHeight: CGFloat = 40
+        static let hexTextFieldPlaceholder: String = "Enter hex code: #RRGGBB"
     }
     
     // MARK: - Varibales
@@ -43,6 +47,7 @@ final class WishMakerViewController: UIViewController {
     private let sliderBlue = CustomSlider(title: Constants.blueLabel, min: Constants.sliderMin, max: Constants.sliderMax)
     private let buttonRandomize = UIButton(type: .system)
     private let buttonToggleSliders = UIButton(type: .system)
+    private let hexTextField = UITextField()
     
     // MARK: - Lifecycle
     init(interactor: BuisnessLogic) {
@@ -84,14 +89,36 @@ final class WishMakerViewController: UIViewController {
     // MARK: - Public funcs
     func displayChangedBackground(_ viewModel: WishMaker.ChangeBackgroundColor.ViewModel) {
         view.backgroundColor = viewModel.uiColor
+        updateHexTextField(viewModel.uiColor)
     }
     
     func displayRandomizedBackground(_ viewModel: WishMaker.RandomizeBackgroundColor.ViewModel) {
         view.backgroundColor = viewModel.uiColor
-        let ciColor = CIColor(color: viewModel.uiColor)
-        sliderRed.slider.setValue(Float(ciColor.red), animated: true)
-        sliderBlue.slider.setValue(Float(ciColor.blue), animated: true)
-        sliderGreen.slider.setValue(Float(ciColor.green), animated: true)
+        updateSliders(viewModel.uiColor)
+        updateHexTextField(viewModel.uiColor)
+    }
+    
+    func displaySetHexColor(_ viewModel: WishMaker.SetHexColor.ViewModel) {
+        view.backgroundColor = viewModel.uiColor
+        updateSliders(viewModel.uiColor)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        
+        if (textField == hexTextField) {
+            let validator = HexValidator()
+            if validator.validate(text) {
+                interactor.setHexColor(.init(hex: text))
+            } else {
+                updateHexTextField(view.backgroundColor ?? .black)
+            }
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // Hides the keyboard
+        return true
     }
     
     // MARK: - Private funcs
@@ -100,7 +127,10 @@ final class WishMakerViewController: UIViewController {
         configurateDescription()
         configurateButtonRandomize()
         configurateButtonToggleSliders()
+        configurateHexTextField()
         configurateStack()
+        
+        updateHexTextField(view.backgroundColor ?? .black)
     }
     
     private func configureTitle() {
@@ -139,8 +169,20 @@ final class WishMakerViewController: UIViewController {
         buttonToggleSliders.configuration = UIButton.Configuration.plain()
         buttonToggleSliders.setTitle(Constants.buttonToggleSlidersTitle, for: .normal)
         buttonToggleSliders.backgroundColor = .white
+        buttonToggleSliders.setHeight(Constants.buttonToggleSlidersHeight)
         
         buttonToggleSliders.addTarget(self, action: #selector(buttonToggleSlidersTapped), for: .touchUpInside)
+    }
+    
+    private func configurateHexTextField() {
+        hexTextField.textAlignment = .center
+        hexTextField.backgroundColor = .white
+        hexTextField.textColor = .black
+        hexTextField.setHeight(Constants.hexTextFieldHeight)
+        hexTextField.placeholder = Constants.hexTextFieldPlaceholder
+        
+        hexTextField.returnKeyType = .done
+        hexTextField.delegate = self
     }
     
     private func configurateStack() {
@@ -149,6 +191,8 @@ final class WishMakerViewController: UIViewController {
         
         stackView.layer.cornerRadius = Constants.stackRadius
         stackView.clipsToBounds = true
+        
+        stackView.addArrangedSubview(hexTextField)
         
         for slider in [sliderRed, sliderGreen, sliderBlue] {
             stackView.addArrangedSubview(slider)
@@ -161,5 +205,16 @@ final class WishMakerViewController: UIViewController {
         
         stackView.pinBottom(to: view, -1 * Constants.stackBottom)
         stackView.pinHorizontal(to: view, Constants.stackLeading)
+    }
+    
+    private func updateSliders(_ uiColor: UIColor) {
+        let ciColor = CIColor(color: uiColor)
+        sliderRed.slider.setValue(Float(ciColor.red), animated: true)
+        sliderBlue.slider.setValue(Float(ciColor.blue), animated: true)
+        sliderGreen.slider.setValue(Float(ciColor.green), animated: true)
+    }
+    
+    private func updateHexTextField(_ uiColor: UIColor) {
+        hexTextField.text = uiColor.toHex()
     }
 }

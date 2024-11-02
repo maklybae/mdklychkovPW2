@@ -38,4 +38,19 @@ enum WishMaker {
             var uiColor: UIColor
         }
     }
+    
+    enum SetHexColor {
+        struct Request {
+            var hex: String
+        }
+        struct Response {
+            var red: Double
+            var green: Double
+            var blue: Double
+            var alpha: Double
+        }
+        struct ViewModel {
+            var uiColor: UIColor
+        }
+    }
 }

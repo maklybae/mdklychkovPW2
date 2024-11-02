@@ -13,12 +13,16 @@ final class Presenter: PresentaionLogic {
     
     // MARK: - Use Case: Change background color
     func presentChangedBackgroundColor(_ response: WishMaker.ChangeBackgroundColor.Response) {
-        view?.displayChangedBackground(WishMaker.ChangeBackgroundColor.ViewModel(uiColor: UIColor(red: response.red, green: response.green, blue: response.blue, alpha: response.alpha)))
+        view?.displayChangedBackground(.init(uiColor: .init(red: response.red, green: response.green, blue: response.blue, alpha: response.alpha)))
     }
     
     // MARK: - Use Case: Randomize background color
     func presentRandomizedBackgroundColor(_ response: WishMaker.RandomizeBackgroundColor.Response) {
-        view?.displayRandomizedBackground(WishMaker.RandomizeBackgroundColor.ViewModel(uiColor: UIColor(red: response.red, green: response.green, blue: response.blue, alpha: response.alpha)))
+        view?.displayRandomizedBackground(.init(uiColor: .init(red: response.red, green: response.green, blue: response.blue, alpha: response.alpha)))
+    }
+    
+    func presentSetHexColor(_ response: WishMaker.SetHexColor.Response) {
+        view?.displaySetHexColor(.init(uiColor: .init(red: response.red, green: response.green, blue: response.blue, alpha: response.alpha)))
     }
     
     // MARK: - Router
