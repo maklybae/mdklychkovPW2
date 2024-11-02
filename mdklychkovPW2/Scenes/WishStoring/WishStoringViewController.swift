@@ -16,7 +16,7 @@ final class WishStoringViewController: UIViewController {
     }
     
     private let table: UITableView = UITableView(frame: .zero)
-    private var wishArray: [String] = ["I wish to add cells to the table1", "I wish to add cells to the table2", "I wish to add cells to the table3"]
+    private var wishArray: [String] = ["I wis adsjfbasjd adfhaskjdfb djkshfkasjbdf asdkjhfkjasbdf kjdhfajskdbf jdhfasdjhbfk asdkuhfiasdf askdfnkasdnfkjasndlfkjbajsdbfajlshdbfjasbhdfjh to add cells to the table1", "I wish to add cells to the table2", "I wish to add cells to the table3"]
     
     override func viewDidLoad() {
         view.backgroundColor = .magenta
@@ -27,12 +27,18 @@ final class WishStoringViewController: UIViewController {
         table.register(WrittenWishCell.self, forCellReuseIdentifier: WrittenWishCell.reuseId)
         table.register(AddWishCell.self, forCellReuseIdentifier: AddWishCell.reuseId)
         
+        table.estimatedRowHeight = 44
+        table.rowHeight = UITableView.automaticDimension
+        
         view.addSubview(table)
         table.backgroundColor = .white
         table.dataSource = self
         table.separatorStyle = .singleLine
         table.layer.cornerRadius = Constants.tableCornerRadius
-        table.pin(to: view, Constants.tableOffset)
+        
+        table.pinHorizontal(to: view, Constants.tableOffset)
+        table.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.tableOffset)
+        table.pinBottom(to: view, Constants.tableOffset)
     }
 }
 
@@ -67,6 +73,15 @@ extension WishStoringViewController: UITableViewDataSource {
             guard let wishCell = cell as? WrittenWishCell else { return cell }
             wishCell.configure(with: wishArray[indexPath.row])
             return wishCell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Add Wish"
+        default:
+            return "Your wishes"
         }
     }
 }

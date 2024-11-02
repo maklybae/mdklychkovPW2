@@ -15,24 +15,17 @@ final class AddWishCell: UITableViewCell {
         static let wrapRadius: CGFloat = 16
         static let wrapOffsetV: CGFloat = 5
         static let wrapOffsetH: CGFloat = 10
-        static let wishLabelOffset: CGFloat = 8
+        
+        static let textViewHeight: CGFloat = 100
+        static let textViewOffsetV: CGFloat = 10
+        static let textViewOffsetH: CGFloat = 10
+        
+        static let addWishButtonOffsetV: CGFloat = 8
+        static let addWishButtonOffsetH: CGFloat = 10
     }
     
-    private let textView: UITextView = {
-        let textView: UITextView = UITextView()
-        textView.font = .systemFont(ofSize: 16)
-        textView.textColor = .label
-        textView.textContainerInset = .zero
-        textView.textContainer.lineFragmentPadding = 0
-        return textView
-    }()
-    private let addWishButton: UIButton = {
-        let button: UIButton = UIButton()
-        button.setTitle("Add wish", for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16)
-        return button
-    }()
+    private let textView = UITextView()
+    private let addWishButton = UIButton(type: .system)
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -45,17 +38,39 @@ final class AddWishCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func configureTextView() {
+        textView.isEditable = true
+        textView.isUserInteractionEnabled = true
+        textView.textColor = .label
+        textView.backgroundColor = .clear
+        textView.font = .preferredFont(forTextStyle: .body)
+        
+        textView.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.textViewHeight).isActive = true
+    }
+    
+    private func configureAddWWishButton() {
+        addWishButton.setTitle("Add wish", for: .normal)
+    }
+    
     private func configureUI() {
+        configureTextView()
+        configureAddWWishButton()
+        
         selectionStyle = .none
         backgroundColor = .clear
+        
         let wrap: UIView = UIView()
-        addSubview(wrap)
-        wrap.backgroundColor = Constants.wrapColor
-        wrap.layer.cornerRadius = Constants.wrapRadius
-        wrap.pinVertical(to: self, Constants.wrapOffsetV)
-        wrap.pinHorizontal(to: self, Constants.wrapOffsetH)
+        contentView.addSubview(wrap)
+        wrap.pinVertical(to: self.contentView, Constants.wrapOffsetV)
+        wrap.pinHorizontal(to: self.contentView, Constants.wrapOffsetH)
+        
+        wrap.addSubview(addWishButton)
+        addWishButton.pinBottom(to: wrap, Constants.addWishButtonOffsetV)
+        addWishButton.pinRight(to: wrap, Constants.addWishButtonOffsetH)
+        
         wrap.addSubview(textView)
-        textView.pin(to: wrap, Constants.wishLabelOffset)
+        textView.pinVertical(to: wrap, Constants.textViewOffsetV)
+        textView.pinLeft(to: wrap, Constants.textViewOffsetH)
+        textView.pinRight(to: addWishButton.leadingAnchor, Constants.textViewOffsetH)
     }
 }
-
