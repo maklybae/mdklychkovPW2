@@ -15,8 +15,19 @@ final class WishStoringViewController: UIViewController {
         static let numberOfSections: Int = 2
     }
     
+    private let interactor: WishStoringBuisnessLogic
     private let table: UITableView = UITableView(frame: .zero)
     private var displayedWishes: [WishStoring.FetchWishes.ViewModel.DisplayedWish] = []
+    
+    init(interactor: WishStoringBuisnessLogic) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         view.backgroundColor = .magenta
@@ -39,6 +50,10 @@ final class WishStoringViewController: UIViewController {
         table.pinHorizontal(to: view, Constants.tableOffset)
         table.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.tableOffset)
         table.pinBottom(to: view, Constants.tableOffset)
+    }
+    
+    private func addWishButtonPressed(withTextViewText text: String) {
+        interactor.addWish(WishStoring.AddWish.Request(text: text))
     }
     
     func displayFetchedWish(_ viewModel: WishStoring.FetchWishes.ViewModel) {
@@ -69,6 +84,7 @@ extension WishStoringViewController: UITableViewDataSource {
                 for: indexPath
             )
             guard let addWishCell = cell as? AddWishCell else { return cell }
+            addWishCell.addWish = addWishButtonPressed
             return addWishCell
         default:
             let cell = tableView.dequeueReusableCell(

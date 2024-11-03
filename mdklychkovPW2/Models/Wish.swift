@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Wish {
+struct Wish: Codable {
     var text: String
     var date: Date
 }
