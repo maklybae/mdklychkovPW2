@@ -53,4 +53,15 @@ enum WishMaker {
             var uiColor: UIColor
         }
     }
+    
+    enum RouteToWishStoring {
+        struct Request {
+            var navigationController: UINavigationController?
+            var backgroundColor: UIColor
+        }
+        struct Response {
+            var navigationController: UINavigationController?
+            var backgroundColor: UIColor
+        }
+    }
 }

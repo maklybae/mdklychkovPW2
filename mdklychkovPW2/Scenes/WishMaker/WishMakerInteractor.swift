@@ -52,6 +52,10 @@ final class WishMakerInteractor: WishMakerBuisnessLogic {
         presenter.presentSetHexColor(WishMaker.SetHexColor.Response(red: red, green: green, blue: blue, alpha: Constants.defaultAlpha))
     }
     
+    func routeToWishStoring(_ request: WishMaker.RouteToWishStoring.Request) {
+        presenter.routeToWishStoring(WishMaker.RouteToWishStoring.Response(navigationController: request.navigationController, backgroundColor: request.backgroundColor))
+    }
+    
     private func extractRGBComponents(from hex: Int) -> (r: Double, g: Double, b: Double) {
         var intColor: Int = hex
         

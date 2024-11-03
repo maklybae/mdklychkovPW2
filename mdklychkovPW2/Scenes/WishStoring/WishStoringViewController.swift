@@ -50,10 +50,17 @@ final class WishStoringViewController: UIViewController {
         table.pinHorizontal(to: view, Constants.tableOffset)
         table.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.tableOffset)
         table.pinBottom(to: view, Constants.tableOffset)
+        
+        fetchWishes()
     }
     
     private func addWishButtonPressed(withTextViewText text: String) {
         interactor.addWish(WishStoring.AddWish.Request(text: text))
+    }
+    
+    private func fetchWishes() {
+        let request = WishStoring.FetchWishes.Request()
+        interactor.fetchWishes(request)
     }
     
     func displayFetchedWish(_ viewModel: WishStoring.FetchWishes.ViewModel) {
