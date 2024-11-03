@@ -16,7 +16,7 @@ final class WishStoringViewController: UIViewController {
     }
     
     private let table: UITableView = UITableView(frame: .zero)
-    private var wishArray: [String] = ["I wis adsjfbasjd adfhaskjdfb djkshfkasjbdf asdkjhfkjasbdf kjdhfajskdbf jdhfasdjhbfk asdkuhfiasdf askdfnkasdnfkjasndlfkjbajsdbfajlshdbfjasbhdfjh to add cells to the table1", "I wish to add cells to the table2", "I wish to add cells to the table3"]
+    private var displayedWishes: [WishStoring.FetchWishes.ViewModel.DisplayedWish] = []
     
     override func viewDidLoad() {
         view.backgroundColor = .magenta
@@ -40,6 +40,11 @@ final class WishStoringViewController: UIViewController {
         table.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.tableOffset)
         table.pinBottom(to: view, Constants.tableOffset)
     }
+    
+    func displayFetchedWish(_ viewModel: WishStoring.FetchWishes.ViewModel) {
+        displayedWishes = viewModel.displayedWishes
+        table.reloadData()
+    }
 }
 
 
@@ -52,7 +57,7 @@ extension WishStoringViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        default: return wishArray.count
+        default: return displayedWishes.count
         }
     }
     
@@ -71,7 +76,7 @@ extension WishStoringViewController: UITableViewDataSource {
                 for: indexPath
             )
             guard let wishCell = cell as? WrittenWishCell else { return cell }
-            wishCell.configure(with: wishArray[indexPath.row])
+            wishCell.configure(with: displayedWishes[indexPath.row].text)
             return wishCell
         }
     }

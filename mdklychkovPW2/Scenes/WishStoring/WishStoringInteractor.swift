@@ -6,3 +6,25 @@
 //
 
 import Foundation
+
+
+final class WishStoringInteractor: WishStoringBuisnessLogic {
+    private let presenter: WishStoringPresentaionLogic
+    private let worker = WishStoringWorker()
+    
+    init(presenter: WishStoringPresentaionLogic) {
+        self.presenter = presenter
+    }
+    
+    func addWish(_ request: WishStoring.AddWish.Request) {
+        let wish = Wish(text: request.text, date: Date.now)
+        worker.appendWish(wish)
+        let wishes = worker.fetchWishes()
+        presenter.presentFetchedWishes(.init(wishes: wishes))
+    }
+    
+    func fetchWishes(_ request: WishStoring.FetchWishes.Request) {
+        let wishes = worker.fetchWishes()
+        presenter.presentFetchedWishes(.init(wishes: wishes))
+    }
+}
