@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct Wish {
+    var text: String
+    var date: Date
+}
