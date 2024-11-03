@@ -8,6 +8,11 @@
 import UIKit
 
 enum WishStoring {
+    struct DisplayedWish: Equatable {
+        var text: String
+        var date: Date
+    }
+    
     enum AddWish {
         struct Request {
             var text: String
@@ -20,9 +25,6 @@ enum WishStoring {
             var wishes: [Wish]
         }
         struct ViewModel {
-            struct DisplayedWish {
-                var text: String
-            }
             var displayedWishes: [DisplayedWish]
         }
     }

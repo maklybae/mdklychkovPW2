@@ -19,6 +19,7 @@ final class WrittenWishCell: UITableViewCell {
     }
     
     private let wishLabel: UILabel = UILabel()
+    private let dateLabel: UILabel = UILabel()
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -31,8 +32,9 @@ final class WrittenWishCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with wish: String) {
-        wishLabel.text = wish
+    func configure(with wish: WishStoring.DisplayedWish) {
+        wishLabel.text = wish.text
+        dateLabel.text = wish.date.formatted(.dateTime)
     }
     
     private func configureUI() {
@@ -40,13 +42,24 @@ final class WrittenWishCell: UITableViewCell {
         
         selectionStyle = .none
         backgroundColor = .clear
+        
         let wrap: UIView = UIView()
         contentView.addSubview(wrap)
         wrap.backgroundColor = Constants.wrapColor
         wrap.layer.cornerRadius = Constants.wrapRadius
+        
+        wrap.addSubview(wishLabel)
+        wishLabel.pinHorizontal(to: wrap, Constants.wishLabelOffset)
+        wishLabel.pinTop(to: wrap, Constants.wishLabelOffset)
+        
+        dateLabel.textAlignment = .right
+        dateLabel.textColor = .lightGray
+        wrap.addSubview(dateLabel)
+        dateLabel.pinHorizontal(to: wrap, Constants.wishLabelOffset)
+        dateLabel.pinTop(to: wishLabel.bottomAnchor, Constants.wishLabelOffset)
+        dateLabel.pinBottom(to: wrap, Constants.wishLabelOffset)
+        
         wrap.pinVertical(to: self.contentView, Constants.wrapOffsetV)
         wrap.pinHorizontal(to: self.contentView, Constants.wrapOffsetH)
-        wrap.addSubview(wishLabel)
-        wishLabel.pin(to: wrap, Constants.wishLabelOffset)
     }
 }

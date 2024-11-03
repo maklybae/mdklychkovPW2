@@ -17,7 +17,7 @@ final class WishStoringViewController: UIViewController {
     
     private let interactor: WishStoringBuisnessLogic
     private let table: UITableView = UITableView(frame: .zero)
-    private var displayedWishes: [WishStoring.FetchWishes.ViewModel.DisplayedWish] = []
+    private var displayedWishes: [WishStoring.DisplayedWish] = []
     
     init(interactor: WishStoringBuisnessLogic) {
         self.interactor = interactor
@@ -49,7 +49,7 @@ final class WishStoringViewController: UIViewController {
         
         table.pinHorizontal(to: view, Constants.tableOffset)
         table.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.tableOffset)
-        table.pinBottom(to: view, Constants.tableOffset)
+        table.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, Constants.tableOffset)
         
         fetchWishes()
     }
@@ -99,7 +99,7 @@ extension WishStoringViewController: UITableViewDataSource {
                 for: indexPath
             )
             guard let wishCell = cell as? WrittenWishCell else { return cell }
-            wishCell.configure(with: displayedWishes[indexPath.row].text)
+            wishCell.configure(with: displayedWishes[indexPath.row])
             return wishCell
         }
     }

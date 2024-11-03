@@ -11,9 +11,9 @@ final class WishStoringPresenter: WishStoringPresentaionLogic {
     weak var view: WishStoringViewController?
     
     func presentFetchedWishes(_ response: WishStoring.FetchWishes.Response) {
-        var displayedWishes = [WishStoring.FetchWishes.ViewModel.DisplayedWish]()
+        var displayedWishes = [WishStoring.DisplayedWish]()
         for wish in response.wishes {
-            let displayedWish = WishStoring.FetchWishes.ViewModel.DisplayedWish(text: wish.text)
+            let displayedWish = WishStoring.DisplayedWish(text: wish.text, date: wish.date)
             displayedWishes.append(displayedWish)
         }
         view?.displayFetchedWish(WishStoring.FetchWishes.ViewModel(displayedWishes: displayedWishes))
