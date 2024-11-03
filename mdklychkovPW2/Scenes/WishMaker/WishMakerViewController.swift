@@ -95,7 +95,10 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     
     @objc
     private func addWishButtonPressed() {
-        navigationController?.pushViewController(WishStoringAssembly.build(), animated: true)
+        interactor.routeToWishStoring(
+            WishMaker.RouteToWishStoring.Request(
+                navigationController: navigationController,
+                backgroundColor: view.backgroundColor ?? .white))
     }
     
     // MARK: - Public funcs
@@ -135,6 +138,8 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Private funcs
     private func configureUI() {
+        view.backgroundColor = .black
+        
         configureTitle()
         configurateDescription()
         configurateButtonRandomize()
