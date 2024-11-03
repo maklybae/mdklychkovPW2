@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Interactor: WishMakerBuisnessLogic {
+final class WishMakerInteractor: WishMakerBuisnessLogic {
     // MARK: - Constants
     private enum Constants {
         static let hexColorBinaryExp: Int = 24

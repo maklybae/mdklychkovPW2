@@ -9,8 +9,8 @@ import UIKit
 
 enum WishMakerAssembly {
     static func build() -> UIViewController {
-        let presenter = Presenter()
-        let interactor = Interactor(presenter: presenter)
+        let presenter = WishMakerPresenter()
+        let interactor = WishMakerInteractor(presenter: presenter)
         let view = WishMakerViewController(interactor: interactor)
         presenter.view = view
         

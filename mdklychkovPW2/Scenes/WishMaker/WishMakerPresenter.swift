@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class Presenter: WishMakerPresentaionLogic {
+final class WishMakerPresenter: WishMakerPresentaionLogic {
     // MARK: - Variables
     weak var view: WishMakerViewController?
     
