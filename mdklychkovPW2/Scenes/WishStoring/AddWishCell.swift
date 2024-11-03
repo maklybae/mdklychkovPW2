@@ -26,6 +26,7 @@ final class AddWishCell: UITableViewCell {
     
     private let textView = UITextView()
     private let addWishButton = UIButton(type: .system)
+    var addWish: ((String) -> ())?
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -36,6 +37,11 @@ final class AddWishCell: UITableViewCell {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc
+    private func addWishButtonPressed() {
+        addWish?(textView.text)
     }
     
     private func configureTextView() {
@@ -50,6 +56,8 @@ final class AddWishCell: UITableViewCell {
     
     private func configureAddWWishButton() {
         addWishButton.setTitle("Add wish", for: .normal)
+        
+        addWishButton.addTarget(self, action: #selector(addWishButtonPressed), for: .touchUpInside)
     }
     
     private func configureUI() {
