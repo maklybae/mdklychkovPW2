@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Interactor: BuisnessLogic {
+final class Interactor: WishMakerBuisnessLogic {
     // MARK: - Constants
     private enum Constants {
         static let hexColorBinaryExp: Int = 24
@@ -16,9 +16,9 @@ final class Interactor: BuisnessLogic {
     }
     
     // MARK: - Variables
-    private let presenter: PresentaionLogic
+    private let presenter: WishMakerPresentaionLogic
     
-    init(presenter: PresentaionLogic) {
+    init(presenter: WishMakerPresentaionLogic) {
         self.presenter = presenter
     }
     

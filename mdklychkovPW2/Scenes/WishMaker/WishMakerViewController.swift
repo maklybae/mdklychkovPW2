@@ -43,7 +43,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Varibales
-    private let interactor: BuisnessLogic
+    private let interactor: WishMakerBuisnessLogic
     
     private let titleView = UILabel()
     private let descriptionView = UILabel()
@@ -57,7 +57,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     private let hexTextField = UITextField()
     
     // MARK: - Lifecycle
-    init(interactor: BuisnessLogic) {
+    init(interactor: WishMakerBuisnessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
