@@ -17,8 +17,8 @@ class WishStoringWorker {
             return []
         }
         
-        let wishes = (try? JSONDecoder().decode([Wish].self, from: savedWishesData)) ?? []
-        return wishes
+        let savedWishes = (try? JSONDecoder().decode([Wish].self, from: savedWishesData)) ?? []
+        return savedWishes
     }
     
     func appendWish(_ wish: Wish) {
@@ -27,6 +27,21 @@ class WishStoringWorker {
         savedWishes.append(wish)
         
         // Encode and save the updated array back to UserDefaults
+        if let encodedWishes = try? JSONEncoder().encode(savedWishes) {
+            UserDefaults.standard.set(encodedWishes, forKey: Constants.wishesKey)
+        }
+    }
+    
+    func deleteWish(atIndex index: Int) {
+        guard let savedWishesData = UserDefaults.standard.data(forKey: Constants.wishesKey) else {
+            return
+        }
+        guard var savedWishes = try? JSONDecoder().decode([Wish].self, from: savedWishesData) else {
+            return
+        }
+        
+        savedWishes.remove(at: index)
+        
         if let encodedWishes = try? JSONEncoder().encode(savedWishes) {
             UserDefaults.standard.set(encodedWishes, forKey: Constants.wishesKey)
         }

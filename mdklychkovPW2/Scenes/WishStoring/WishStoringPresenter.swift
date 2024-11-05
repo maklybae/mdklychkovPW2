@@ -10,17 +10,27 @@ import Foundation
 final class WishStoringPresenter: WishStoringPresentaionLogic {
     weak var view: WishStoringViewController?
     
-    func presentFetchedWishes(_ response: WishStoring.FetchWishes.Response) {
+    private func convertToDisplayedWishes(_ wishes: [Wish]) -> [WishStoring.DisplayedWish] {
         var displayedWishes = [WishStoring.DisplayedWish]()
-        for wish in response.wishes {
+        for wish in wishes {
             let displayedWish = WishStoring.DisplayedWish(text: wish.text, date: wish.date)
             displayedWishes.append(displayedWish)
         }
+        return displayedWishes
+    }
+    
+    func presentFetchedWishes(_ response: WishStoring.FetchWishes.Response) {
+        let displayedWishes = convertToDisplayedWishes(response.wishes)
         view?.displayFetchedWish(WishStoring.FetchWishes.ViewModel(displayedWishes: displayedWishes))
     }
     
-    func routeTo() {
-        
+    func presentAddedWish(_ response: WishStoring.AddWish.Response) {
+        let displayedWishes = convertToDisplayedWishes(response.wishes)
+        view?.displayAddedWish(WishStoring.AddWish.ViewModel(displayedWishes: displayedWishes))
     }
     
+    func presentDeletedWish(_ response: WishStoring.DeleteWish.Response) {
+        let displayedWishes = convertToDisplayedWishes(response.wishes)
+        view?.displayDeletedWish(WishStoring.DeleteWish.ViewModel(displayedWishes: displayedWishes))
+    }
 }

@@ -54,16 +54,29 @@ final class WishStoringViewController: UIViewController {
         fetchWishes()
     }
     
-    private func addWishButtonPressed(withTextViewText text: String) {
+    private func addWish(withTextViewText text: String) {
         interactor.addWish(WishStoring.AddWish.Request(text: text))
     }
     
     private func fetchWishes() {
-        let request = WishStoring.FetchWishes.Request()
-        interactor.fetchWishes(request)
+        interactor.fetchWishes(WishStoring.FetchWishes.Request())
+    }
+    
+    private func deleteWish(at indexPath: IndexPath) {
+        interactor.deleteWish(WishStoring.DeleteWish.Request(index: indexPath.row))
     }
     
     func displayFetchedWish(_ viewModel: WishStoring.FetchWishes.ViewModel) {
+        displayedWishes = viewModel.displayedWishes
+        table.reloadData()
+    }
+    
+    func displayAddedWish(_ viewModel: WishStoring.AddWish.ViewModel) {
+        displayedWishes = viewModel.displayedWishes
+        table.reloadData()
+    }
+    
+    func displayDeletedWish(_ viewModel: WishStoring.DeleteWish.ViewModel) {
         displayedWishes = viewModel.displayedWishes
         table.reloadData()
     }
@@ -91,7 +104,7 @@ extension WishStoringViewController: UITableViewDataSource {
                 for: indexPath
             )
             guard let addWishCell = cell as? AddWishCell else { return cell }
-            addWishCell.addWish = addWishButtonPressed
+            addWishCell.addWish = addWish
             return addWishCell
         default:
             let cell = tableView.dequeueReusableCell(
@@ -100,6 +113,10 @@ extension WishStoringViewController: UITableViewDataSource {
             )
             guard let wishCell = cell as? WrittenWishCell else { return cell }
             wishCell.configure(with: displayedWishes[indexPath.row])
+            wishCell.deleteWish = { [weak self] in
+                self?.deleteWish(at: indexPath)
+            }
+            
             return wishCell
         }
     }

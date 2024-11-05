@@ -42,6 +42,7 @@ final class AddWishCell: UITableViewCell {
     @objc
     private func addWishButtonPressed() {
         addWish?(textView.text)
+        textView.text = ""
     }
     
     private func configureTextView() {

@@ -17,10 +17,28 @@ enum WishStoring {
         struct Request {
             var text: String
         }
+        struct Response {
+            var wishes: [Wish]
+        }
+        struct ViewModel {
+            var displayedWishes: [DisplayedWish]
+        }
     }
     
     enum FetchWishes {
         struct Request {}
+        struct Response {
+            var wishes: [Wish]
+        }
+        struct ViewModel {
+            var displayedWishes: [DisplayedWish]
+        }
+    }
+    
+    enum DeleteWish {
+        struct Request {
+            var index: Int
+        }
         struct Response {
             var wishes: [Wish]
         }
