@@ -9,6 +9,7 @@ import UIKit
 
 // MARK: - Use Cases
 enum WishMaker {
+    // MARK: - Change background color
     enum ChangeBackgroundColor {
         struct Request {
             var red: Double
@@ -26,6 +27,7 @@ enum WishMaker {
         }
     }
     
+    // MARK: - Randomize background color
     enum RandomizeBackgroundColor {
         struct Request { }
         struct Response {
@@ -39,6 +41,7 @@ enum WishMaker {
         }
     }
     
+    // MARK: - Set hex color
     enum SetHexColor {
         struct Request {
             var hex: String
@@ -54,6 +57,7 @@ enum WishMaker {
         }
     }
     
+    // MARK: - Route to WishStoring view
     enum RouteToWishStoring {
         struct Request {
             var navigationController: UINavigationController?

@@ -8,6 +8,7 @@
 import UIKit
 
 enum WishMakerAssembly {
+    // MARK: - Build
     static func build() -> UIViewController {
         let presenter = WishMakerPresenter()
         let interactor = WishMakerInteractor(presenter: presenter)

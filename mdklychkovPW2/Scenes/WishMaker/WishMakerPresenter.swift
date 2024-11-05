@@ -21,6 +21,7 @@ final class WishMakerPresenter: WishMakerPresentaionLogic {
         view?.displayRandomizedBackground(.init(uiColor: .init(red: response.red, green: response.green, blue: response.blue, alpha: response.alpha)))
     }
     
+    // MARK: - Use Case: Randomize background color
     func presentSetHexColor(_ response: WishMaker.SetHexColor.Response) {
         view?.displaySetHexColor(.init(uiColor: .init(red: response.red, green: response.green, blue: response.blue, alpha: response.alpha)))
     }

@@ -141,12 +141,12 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = .black
         
         configureTitle()
-        configurateDescription()
-        configurateButtonRandomize()
-        configurateButtonToggleSliders()
-        configurateHexTextField()
+        configureDescription()
+        configureButtonRandomize()
+        configureButtonToggleSliders()
+        configureHexTextField()
         configureAddWishButton()
-        configurateStack()
+        configureStack()
         
         updateHexTextField(view.backgroundColor ?? .black)
     }
@@ -162,7 +162,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         titleView.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.viewTitleVerticalSpacing)
     }
     
-    private func configurateDescription() {
+    private func configureDescription() {
         descriptionView.text = Constants.viewDescription
         descriptionView.lineBreakMode = NSLineBreakMode.byWordWrapping
         descriptionView.numberOfLines = 0 // word wrapping
@@ -174,7 +174,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         descriptionView.pinTop(to: titleView.bottomAnchor, Constants.viewDescriptionVerticalSpacing)
     }
     
-    private func configurateButtonRandomize() {
+    private func configureButtonRandomize() {
         buttonRandomize.configuration = UIButton.Configuration.plain()
         buttonRandomize.setTitle(Constants.buttonRandomizeTitle, for: .normal)
         buttonRandomize.backgroundColor = .white
@@ -197,7 +197,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         buttonAddWish.addTarget(self, action: #selector(addWishButtonPressed), for: .touchUpInside)
     }
 
-    private func configurateButtonToggleSliders() {
+    private func configureButtonToggleSliders() {
         buttonToggleSliders.configuration = UIButton.Configuration.plain()
         buttonToggleSliders.setTitle(Constants.buttonToggleSlidersTitle, for: .normal)
         buttonToggleSliders.backgroundColor = .white
@@ -206,7 +206,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         buttonToggleSliders.addTarget(self, action: #selector(buttonToggleSlidersTapped), for: .touchUpInside)
     }
     
-    private func configurateHexTextField() {
+    private func configureHexTextField() {
         hexTextField.textAlignment = .center
         hexTextField.backgroundColor = .white
         hexTextField.textColor = .black
@@ -217,7 +217,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         hexTextField.delegate = self
     }
     
-    private func configurateStack() {
+    private func configureStack() {
         stackView.axis = .vertical
         view.addSubview(stackView)
         

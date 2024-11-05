@@ -38,6 +38,7 @@ final class WishMakerInteractor: WishMakerBuisnessLogic {
         presenter.presentRandomizedBackgroundColor(WishMaker.RandomizeBackgroundColor.Response(red: red, green: green, blue: blue, alpha: Constants.defaultAlpha))
     }
     
+    // MARK: - Use Case: Set hex color
     func setHexColor(_ request: WishMaker.SetHexColor.Request) {
         // Remove the '#' prefix
         let hexWithoutPrefix = String(request.hex.dropFirst())
@@ -56,6 +57,7 @@ final class WishMakerInteractor: WishMakerBuisnessLogic {
         presenter.routeToWishStoring(WishMaker.RouteToWishStoring.Response(navigationController: request.navigationController, backgroundColor: request.backgroundColor))
     }
     
+    // MARK: - Private funcs
     private func extractRGBComponents(from hex: Int) -> (r: Double, g: Double, b: Double) {
         var intColor: Int = hex
         
