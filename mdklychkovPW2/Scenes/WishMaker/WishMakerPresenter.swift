@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class Presenter: PresentaionLogic {
+final class WishMakerPresenter: WishMakerPresentaionLogic {
     // MARK: - Variables
     weak var view: WishMakerViewController?
     
@@ -21,13 +21,14 @@ final class Presenter: PresentaionLogic {
         view?.displayRandomizedBackground(.init(uiColor: .init(red: response.red, green: response.green, blue: response.blue, alpha: response.alpha)))
     }
     
+    // MARK: - Use Case: Randomize background color
     func presentSetHexColor(_ response: WishMaker.SetHexColor.Response) {
         view?.displaySetHexColor(.init(uiColor: .init(red: response.red, green: response.green, blue: response.blue, alpha: response.alpha)))
     }
     
     // MARK: - Router
-    func routeTo() {
-        view?.navigationController?.pushViewController(UIViewController(), animated: true)
+    func routeToWishStoring(_ response: WishMaker.RouteToWishStoring.Response) {
+        response.navigationController?.pushViewController(WishStoringAssembly.build(withColor: response.backgroundColor), animated: true)
     }
     
     

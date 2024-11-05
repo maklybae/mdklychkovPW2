@@ -22,7 +22,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         static let greenLabel: String = "Green"
         static let blueLabel: String = "Blue"
         static let stackRadius: CGFloat = 20
-        static let stackBottom: CGFloat = -40
+        static let stackBottom: CGFloat = 50
         static let stackLeading: CGFloat = 20
         
         static let buttonRandomizeTitle: String = "Randomize"
@@ -32,12 +32,18 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         static let buttonToggleSlidersTitle: String = "Toggle Sliders"
         static let buttonToggleSlidersHeight: CGFloat = 40
         
+        static let buttonAddWishHeight: CGFloat = 40
+        static let buttonAddWishTitle: String = "Add Wish"
+        static let buttonAddWishBottom: CGFloat = 40
+        static let buttonAddWishLeading: CGFloat = 20
+        static let buttonAddWishRadius: CGFloat = 15
+        
         static let hexTextFieldHeight: CGFloat = 40
         static let hexTextFieldPlaceholder: String = "Enter hex code: #RRGGBB"
     }
     
     // MARK: - Varibales
-    private let interactor: BuisnessLogic
+    private let interactor: WishMakerBuisnessLogic
     
     private let titleView = UILabel()
     private let descriptionView = UILabel()
@@ -47,10 +53,11 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     private let sliderBlue = CustomSlider(title: Constants.blueLabel, min: Constants.sliderMin, max: Constants.sliderMax)
     private let buttonRandomize = UIButton(type: .system)
     private let buttonToggleSliders = UIButton(type: .system)
+    private let buttonAddWish: UIButton = UIButton(type: .system)
     private let hexTextField = UITextField()
     
     // MARK: - Lifecycle
-    init(interactor: BuisnessLogic) {
+    init(interactor: WishMakerBuisnessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
@@ -84,6 +91,14 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
                 slider.alpha = slider.isHidden ? 0 : 1
             }
         }
+    }
+    
+    @objc
+    private func addWishButtonPressed() {
+        interactor.routeToWishStoring(
+            WishMaker.RouteToWishStoring.Request(
+                navigationController: navigationController,
+                backgroundColor: view.backgroundColor ?? .white))
     }
     
     // MARK: - Public funcs
@@ -123,12 +138,15 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Private funcs
     private func configureUI() {
+        view.backgroundColor = .black
+        
         configureTitle()
-        configurateDescription()
-        configurateButtonRandomize()
-        configurateButtonToggleSliders()
-        configurateHexTextField()
-        configurateStack()
+        configureDescription()
+        configureButtonRandomize()
+        configureButtonToggleSliders()
+        configureHexTextField()
+        configureAddWishButton()
+        configureStack()
         
         updateHexTextField(view.backgroundColor ?? .black)
     }
@@ -144,7 +162,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         titleView.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.viewTitleVerticalSpacing)
     }
     
-    private func configurateDescription() {
+    private func configureDescription() {
         descriptionView.text = Constants.viewDescription
         descriptionView.lineBreakMode = NSLineBreakMode.byWordWrapping
         descriptionView.numberOfLines = 0 // word wrapping
@@ -156,7 +174,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         descriptionView.pinTop(to: titleView.bottomAnchor, Constants.viewDescriptionVerticalSpacing)
     }
     
-    private func configurateButtonRandomize() {
+    private func configureButtonRandomize() {
         buttonRandomize.configuration = UIButton.Configuration.plain()
         buttonRandomize.setTitle(Constants.buttonRandomizeTitle, for: .normal)
         buttonRandomize.backgroundColor = .white
@@ -165,7 +183,21 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         buttonRandomize.addTarget(self, action: #selector(buttonRandomizeTapped), for: .touchUpInside)
     }
     
-    private func configurateButtonToggleSliders() {
+    private func configureAddWishButton() {
+        view.addSubview(buttonAddWish)
+        buttonAddWish.setHeight(Constants.buttonAddWishHeight)
+        buttonAddWish.pinBottom(to: view, Constants.buttonAddWishBottom)
+        buttonAddWish.pinHorizontal(to: view, Constants.buttonAddWishLeading)
+
+        buttonAddWish.backgroundColor = .white
+        buttonAddWish.setTitleColor(.systemPink, for: .normal)
+        buttonAddWish.setTitle(Constants.buttonAddWishTitle, for: .normal)
+        buttonAddWish.layer.cornerRadius = Constants.buttonAddWishRadius
+        
+        buttonAddWish.addTarget(self, action: #selector(addWishButtonPressed), for: .touchUpInside)
+    }
+
+    private func configureButtonToggleSliders() {
         buttonToggleSliders.configuration = UIButton.Configuration.plain()
         buttonToggleSliders.setTitle(Constants.buttonToggleSlidersTitle, for: .normal)
         buttonToggleSliders.backgroundColor = .white
@@ -174,7 +206,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         buttonToggleSliders.addTarget(self, action: #selector(buttonToggleSlidersTapped), for: .touchUpInside)
     }
     
-    private func configurateHexTextField() {
+    private func configureHexTextField() {
         hexTextField.textAlignment = .center
         hexTextField.backgroundColor = .white
         hexTextField.textColor = .black
@@ -185,7 +217,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         hexTextField.delegate = self
     }
     
-    private func configurateStack() {
+    private func configureStack() {
         stackView.axis = .vertical
         view.addSubview(stackView)
         
@@ -203,7 +235,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         stackView.addArrangedSubview(buttonRandomize)
         
         
-        stackView.pinBottom(to: view, -1 * Constants.stackBottom)
+        stackView.pinBottom(to: buttonAddWish, Constants.stackBottom)
         stackView.pinHorizontal(to: view, Constants.stackLeading)
     }
     

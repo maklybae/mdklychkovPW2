@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Interactor: BuisnessLogic {
+final class WishMakerInteractor: WishMakerBuisnessLogic {
     // MARK: - Constants
     private enum Constants {
         static let hexColorBinaryExp: Int = 24
@@ -16,9 +16,9 @@ final class Interactor: BuisnessLogic {
     }
     
     // MARK: - Variables
-    private let presenter: PresentaionLogic
+    private let presenter: WishMakerPresentaionLogic
     
-    init(presenter: PresentaionLogic) {
+    init(presenter: WishMakerPresentaionLogic) {
         self.presenter = presenter
     }
     
@@ -38,6 +38,7 @@ final class Interactor: BuisnessLogic {
         presenter.presentRandomizedBackgroundColor(WishMaker.RandomizeBackgroundColor.Response(red: red, green: green, blue: blue, alpha: Constants.defaultAlpha))
     }
     
+    // MARK: - Use Case: Set hex color
     func setHexColor(_ request: WishMaker.SetHexColor.Request) {
         // Remove the '#' prefix
         let hexWithoutPrefix = String(request.hex.dropFirst())
@@ -52,6 +53,11 @@ final class Interactor: BuisnessLogic {
         presenter.presentSetHexColor(WishMaker.SetHexColor.Response(red: red, green: green, blue: blue, alpha: Constants.defaultAlpha))
     }
     
+    func routeToWishStoring(_ request: WishMaker.RouteToWishStoring.Request) {
+        presenter.routeToWishStoring(WishMaker.RouteToWishStoring.Response(navigationController: request.navigationController, backgroundColor: request.backgroundColor))
+    }
+    
+    // MARK: - Private funcs
     private func extractRGBComponents(from hex: Int) -> (r: Double, g: Double, b: Double) {
         var intColor: Int = hex
         
