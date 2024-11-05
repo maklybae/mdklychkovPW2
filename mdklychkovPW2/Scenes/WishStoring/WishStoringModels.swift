@@ -51,4 +51,19 @@ enum WishStoring {
             var displayedWishes: [DisplayedWish]
         }
     }
+    
+    // MARK: - Edit wish
+    enum EditWish {
+        struct Request {
+            var index: Int
+        }
+        struct Response {
+            var wishes: [Wish]
+            var editedWishText: String
+        }
+        struct ViewModel {
+            var displayedWishes: [DisplayedWish]
+            var editedWishText: String
+        }
+    }
 }

@@ -27,6 +27,11 @@ final class WishStoringPresenter: WishStoringPresentaionLogic {
         view?.displayDeletedWish(WishStoring.DeleteWish.ViewModel(displayedWishes: displayedWishes))
     }
     
+    func presentEditedWish(_ response: WishStoring.EditWish.Response) {
+        let displayedWishes = convertToDisplayedWishes(response.wishes)
+        view?.displayEditedWish(WishStoring.EditWish.ViewModel(displayedWishes: displayedWishes, editedWishText: response.editedWishText))
+    }
+    
     // MARK: - Private funcs
     private func convertToDisplayedWishes(_ wishes: [Wish]) -> [WishStoring.DisplayedWish] {
         var displayedWishes = [WishStoring.DisplayedWish]()

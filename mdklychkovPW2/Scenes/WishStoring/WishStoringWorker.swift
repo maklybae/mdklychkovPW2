@@ -23,6 +23,16 @@ class WishStoringWorker {
         return savedWishes
     }
     
+    func getWish(atIndex index: Int) -> Wish? {
+        guard let savedWishesData = UserDefaults.standard.data(forKey: Constants.wishesKey) else {
+            return nil
+        }
+        guard let savedWishes = try? JSONDecoder().decode([Wish].self, from: savedWishesData) else {
+            return nil
+        }
+        return savedWishes[index]
+    }
+    
     func appendWish(_ wish: Wish) {
         var savedWishes = (try? JSONDecoder().decode([Wish].self, from: UserDefaults.standard.data(forKey: Constants.wishesKey) ?? Data())) ?? []
         

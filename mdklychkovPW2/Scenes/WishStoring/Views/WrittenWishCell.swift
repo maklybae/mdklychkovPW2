@@ -22,9 +22,11 @@ final class WrittenWishCell: UITableViewCell {
     
     // MARK: Variables
     var deleteWish: (() -> Void)?
+    var editWish: (() -> Void)?
     private let wishLabel: UILabel = UILabel()
     private let dateLabel: UILabel = UILabel()
     private let deleteButton: UIButton = UIButton(type: .system)
+    private let editButton: UIButton = UIButton(type: .system)
     private let stackView: UIStackView = UIStackView()
     
     // MARK: - Lifecycle
@@ -44,6 +46,11 @@ final class WrittenWishCell: UITableViewCell {
         deleteWish?()
     }
     
+    @objc
+    func editButtonPressed() {
+        editWish?()
+    }
+    
     // MARK: Public funcs
     func configure(with wish: WishStoring.DisplayedWish) {
         wishLabel.text = wish.text
@@ -56,7 +63,7 @@ final class WrittenWishCell: UITableViewCell {
         dateLabel.textColor = .lightGray
     }
     
-    private func configureButton() {
+    private func configureDeleteButton() {
         let image = UIImage(systemName: "trash")
         deleteButton.setImage(image, for: .normal)
         deleteButton.tintColor = .systemRed
@@ -64,11 +71,20 @@ final class WrittenWishCell: UITableViewCell {
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
     }
     
+    private func configureEditButton() {
+        let image = UIImage(systemName: "square.and.pencil")
+        editButton.setImage(image, for: .normal)
+        editButton.tintColor = .systemBlue
+        
+        editButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
+    }
+    
     private func configureStackView() {
         stackView.axis = .horizontal
         stackView.alignment = .leading
         stackView.distribution = .fillProportionally
         stackView.addArrangedSubview(deleteButton)
+        stackView.addArrangedSubview(editButton)
         stackView.addArrangedSubview(dateLabel)
     }
     
@@ -88,7 +104,8 @@ final class WrittenWishCell: UITableViewCell {
         wishLabel.pinTop(to: wrap, Constants.wishLabelOffset)
         
         configureDateLabel()
-        configureButton()
+        configureDeleteButton()
+        configureEditButton()
         configureStackView()
         wrap.addSubview(stackView)
         stackView.pinHorizontal(to: wrap, Constants.wishLabelOffset)

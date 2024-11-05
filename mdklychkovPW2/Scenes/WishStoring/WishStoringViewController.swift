@@ -16,7 +16,8 @@ final class WishStoringViewController: UIViewController {
         static let numberOfSections: Int = 2
         static let estimatedRowHeight: Double = 44
         
-        static let addWishCellSectionIndex: Int = 0
+        static let addWishCellRow: Int = 0
+        static let addWishCellSection: Int = 0
         static let numberOfAddWishCells: Int = 1
         
         static let addWishSectionTitle: String = "Add wish"
@@ -60,6 +61,14 @@ final class WishStoringViewController: UIViewController {
         table.reloadData()
     }
     
+    func displayEditedWish(_ viewModel: WishStoring.EditWish.ViewModel) {
+        displayedWishes = viewModel.displayedWishes
+        table.reloadData()
+        if let addWishCell = table.cellForRow(at: IndexPath(row: Constants.addWishCellRow, section: Constants.addWishCellSection)) as? AddWishCell {
+            addWishCell.setText(viewModel.editedWishText)
+        }
+    }
+    
     // MARK: - Private funcs
     private func configureTable() {
         table.register(WrittenWishCell.self, forCellReuseIdentifier: WrittenWishCell.reuseId)
@@ -92,6 +101,10 @@ final class WishStoringViewController: UIViewController {
     private func deleteWish(at indexPath: IndexPath) {
         interactor.deleteWish(WishStoring.DeleteWish.Request(index: indexPath.row))
     }
+    
+    private func editWish(at indexPath: IndexPath) {
+        interactor.editWish(WishStoring.EditWish.Request(index: indexPath.row))
+    }
 }
 
 
@@ -103,14 +116,14 @@ extension WishStoringViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case Constants.addWishCellSectionIndex: return Constants.numberOfAddWishCells
+        case Constants.addWishCellSection: return Constants.numberOfAddWishCells
         default: return displayedWishes.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
-        case Constants.addWishCellSectionIndex:
+        case Constants.addWishCellSection:
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: AddWishCell.reuseId,
                 for: indexPath
@@ -128,6 +141,9 @@ extension WishStoringViewController: UITableViewDataSource {
             wishCell.deleteWish = { [weak self] in
                 self?.deleteWish(at: indexPath)
             }
+            wishCell.editWish = { [weak self] in
+                self?.editWish(at: indexPath)
+            }
             
             return wishCell
         }
@@ -135,7 +151,7 @@ extension WishStoringViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case Constants.addWishCellSectionIndex:
+        case Constants.addWishCellSection:
             return Constants.addWishSectionTitle
         default:
             return Constants.wishesSectionTitle

@@ -49,6 +49,11 @@ final class AddWishCell: UITableViewCell {
         textView.text = ""
     }
     
+    // MARK: - Public funcs
+    func setText(_ text: String) {
+        textView.text = text
+    }
+    
     // MARK: - Private funcs
     private func configureTextView() {
         textView.isEditable = true
