@@ -8,8 +8,10 @@
 import UIKit
 
 final class WrittenWishCell: UITableViewCell {
+    // MARK: Static
     static let reuseId: String = "WrittenWishCell"
     
+    // MARK: Constants
     private enum Constants {
         static let wrapColor: UIColor = .white
         static let wrapRadius: CGFloat = 16
@@ -18,6 +20,7 @@ final class WrittenWishCell: UITableViewCell {
         static let wishLabelOffset: CGFloat = 8
     }
     
+    // MARK: Variables
     var deleteWish: (() -> Void)?
     private let wishLabel: UILabel = UILabel()
     private let dateLabel: UILabel = UILabel()
@@ -35,16 +38,19 @@ final class WrittenWishCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Actions
     @objc
     func deleteButtonPressed() {
         deleteWish?()
     }
     
+    // MARK: Public funcs
     func configure(with wish: WishStoring.DisplayedWish) {
         wishLabel.text = wish.text
         dateLabel.text = wish.date.formatted(.dateTime)
     }
     
+    // MARK: Private funcs
     private func configureDateLabel() {
         dateLabel.textAlignment = .right
         dateLabel.textColor = .lightGray

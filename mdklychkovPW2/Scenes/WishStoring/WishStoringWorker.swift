@@ -8,10 +8,12 @@
 import Foundation
 
 class WishStoringWorker {
+    // MARK: - Constants
     private enum Constants {
         static let wishesKey = "wishes"
     }
     
+    // MARK: Public funcs
     func fetchWishes() -> [Wish] {
         guard let savedWishesData = UserDefaults.standard.data(forKey: Constants.wishesKey) else {
             return []
@@ -26,7 +28,6 @@ class WishStoringWorker {
         
         savedWishes.append(wish)
         
-        // Encode and save the updated array back to UserDefaults
         if let encodedWishes = try? JSONEncoder().encode(savedWishes) {
             UserDefaults.standard.set(encodedWishes, forKey: Constants.wishesKey)
         }

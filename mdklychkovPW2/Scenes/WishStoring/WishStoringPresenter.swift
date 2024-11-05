@@ -8,17 +8,10 @@
 import Foundation
 
 final class WishStoringPresenter: WishStoringPresentaionLogic {
+    // MARK: - Variables
     weak var view: WishStoringViewController?
-    
-    private func convertToDisplayedWishes(_ wishes: [Wish]) -> [WishStoring.DisplayedWish] {
-        var displayedWishes = [WishStoring.DisplayedWish]()
-        for wish in wishes {
-            let displayedWish = WishStoring.DisplayedWish(text: wish.text, date: wish.date)
-            displayedWishes.append(displayedWish)
-        }
-        return displayedWishes
-    }
-    
+        
+    // MARK: - Public funcs
     func presentFetchedWishes(_ response: WishStoring.FetchWishes.Response) {
         let displayedWishes = convertToDisplayedWishes(response.wishes)
         view?.displayFetchedWish(WishStoring.FetchWishes.ViewModel(displayedWishes: displayedWishes))
@@ -33,4 +26,15 @@ final class WishStoringPresenter: WishStoringPresentaionLogic {
         let displayedWishes = convertToDisplayedWishes(response.wishes)
         view?.displayDeletedWish(WishStoring.DeleteWish.ViewModel(displayedWishes: displayedWishes))
     }
+    
+    // MARK: - Private funcs
+    private func convertToDisplayedWishes(_ wishes: [Wish]) -> [WishStoring.DisplayedWish] {
+        var displayedWishes = [WishStoring.DisplayedWish]()
+        for wish in wishes {
+            let displayedWish = WishStoring.DisplayedWish(text: wish.text, date: wish.date)
+            displayedWishes.append(displayedWish)
+        }
+        return displayedWishes
+    }
+    
 }

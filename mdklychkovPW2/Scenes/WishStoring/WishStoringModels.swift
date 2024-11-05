@@ -8,11 +8,14 @@
 import UIKit
 
 enum WishStoring {
+    // MARK: - DisplayedWish model
     struct DisplayedWish: Equatable {
         var text: String
         var date: Date
     }
     
+    // MARK: - Use Cases
+    // MARK: - Add wish
     enum AddWish {
         struct Request {
             var text: String
@@ -25,6 +28,7 @@ enum WishStoring {
         }
     }
     
+    // MARK: - Fetch wishes
     enum FetchWishes {
         struct Request {}
         struct Response {
@@ -35,6 +39,7 @@ enum WishStoring {
         }
     }
     
+    // MARK: - Delete wish
     enum DeleteWish {
         struct Request {
             var index: Int

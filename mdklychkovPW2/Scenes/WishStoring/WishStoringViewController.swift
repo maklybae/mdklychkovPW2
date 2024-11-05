@@ -8,17 +8,27 @@
 import UIKit
 
 final class WishStoringViewController: UIViewController {
+    // MARK: - Constants
     enum Constants {
         static let tableCornerRadius: Double = 16
         static let tableOffset: Double = 16
         
         static let numberOfSections: Int = 2
+        static let estimatedRowHeight: Double = 44
+        
+        static let addWishCellSectionIndex: Int = 0
+        static let numberOfAddWishCells: Int = 1
+        
+        static let addWishSectionTitle: String = "Add wish"
+        static let wishesSectionTitle: String = "Wishes"
     }
     
+    // MARK: - Variables
     private let interactor: WishStoringBuisnessLogic
     private let table: UITableView = UITableView(frame: .zero)
     private var displayedWishes: [WishStoring.DisplayedWish] = []
     
+    // MARK: - Lifecycle
     init(interactor: WishStoringBuisnessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -34,11 +44,28 @@ final class WishStoringViewController: UIViewController {
         configureTable()
     }
     
+    // MARK: Public funcs
+    func displayFetchedWish(_ viewModel: WishStoring.FetchWishes.ViewModel) {
+        displayedWishes = viewModel.displayedWishes
+        table.reloadData()
+    }
+    
+    func displayAddedWish(_ viewModel: WishStoring.AddWish.ViewModel) {
+        displayedWishes = viewModel.displayedWishes
+        table.reloadData()
+    }
+    
+    func displayDeletedWish(_ viewModel: WishStoring.DeleteWish.ViewModel) {
+        displayedWishes = viewModel.displayedWishes
+        table.reloadData()
+    }
+    
+    // MARK: - Private funcs
     private func configureTable() {
         table.register(WrittenWishCell.self, forCellReuseIdentifier: WrittenWishCell.reuseId)
         table.register(AddWishCell.self, forCellReuseIdentifier: AddWishCell.reuseId)
         
-        table.estimatedRowHeight = 44
+        table.estimatedRowHeight = Constants.estimatedRowHeight
         table.rowHeight = UITableView.automaticDimension
         
         view.addSubview(table)
@@ -65,25 +92,10 @@ final class WishStoringViewController: UIViewController {
     private func deleteWish(at indexPath: IndexPath) {
         interactor.deleteWish(WishStoring.DeleteWish.Request(index: indexPath.row))
     }
-    
-    func displayFetchedWish(_ viewModel: WishStoring.FetchWishes.ViewModel) {
-        displayedWishes = viewModel.displayedWishes
-        table.reloadData()
-    }
-    
-    func displayAddedWish(_ viewModel: WishStoring.AddWish.ViewModel) {
-        displayedWishes = viewModel.displayedWishes
-        table.reloadData()
-    }
-    
-    func displayDeletedWish(_ viewModel: WishStoring.DeleteWish.ViewModel) {
-        displayedWishes = viewModel.displayedWishes
-        table.reloadData()
-    }
 }
 
 
-// MARK: - UITableViewDataSource
+// MARK: - Extension UITableViewDataSource
 extension WishStoringViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return Constants.numberOfSections
@@ -91,14 +103,14 @@ extension WishStoringViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0: return 1
+        case Constants.addWishCellSectionIndex: return Constants.numberOfAddWishCells
         default: return displayedWishes.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
-        case 0:
+        case Constants.addWishCellSectionIndex:
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: AddWishCell.reuseId,
                 for: indexPath
@@ -123,10 +135,10 @@ extension WishStoringViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0:
-            return "Add Wish"
+        case Constants.addWishCellSectionIndex:
+            return Constants.addWishSectionTitle
         default:
-            return "Your wishes"
+            return Constants.wishesSectionTitle
         }
     }
 }

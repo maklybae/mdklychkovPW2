@@ -8,8 +8,10 @@
 import UIKit
 
 final class AddWishCell: UITableViewCell {
+    // MARK: - Static
     static let reuseId: String = "AddWishCell"
     
+    // MARK: - Constants
     private enum Constants {
         static let wrapColor: UIColor = .white
         static let wrapRadius: CGFloat = 16
@@ -24,6 +26,7 @@ final class AddWishCell: UITableViewCell {
         static let addWishButtonOffsetH: CGFloat = 10
     }
     
+    // MARK: - Variables
     private let textView = UITextView()
     private let addWishButton = UIButton(type: .system)
     var addWish: ((String) -> ())?
@@ -39,12 +42,14 @@ final class AddWishCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Actions
     @objc
     private func addWishButtonPressed() {
         addWish?(textView.text)
         textView.text = ""
     }
     
+    // MARK: - Private funcs
     private func configureTextView() {
         textView.isEditable = true
         textView.isUserInteractionEnabled = true

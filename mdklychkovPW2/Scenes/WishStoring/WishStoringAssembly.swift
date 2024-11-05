@@ -8,6 +8,7 @@
 import UIKit
 
 enum WishStoringAssembly {
+    // MARK: - Build
     static func build(withColor color: UIColor) -> UIViewController {
         let presenter = WishStoringPresenter()
         let interactor = WishStoringInteractor(presenter: presenter)
