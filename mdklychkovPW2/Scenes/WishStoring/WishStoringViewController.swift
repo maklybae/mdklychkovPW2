@@ -107,7 +107,6 @@ final class WishStoringViewController: UIViewController {
     }
 }
 
-
 // MARK: - Extension UITableViewDataSource
 extension WishStoringViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {

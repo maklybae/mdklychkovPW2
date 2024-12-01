@@ -19,4 +19,3 @@ enum WishStoringAssembly {
         return viewController
     }
 }
-

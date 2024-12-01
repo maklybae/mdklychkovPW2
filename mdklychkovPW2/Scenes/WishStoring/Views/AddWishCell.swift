@@ -29,7 +29,7 @@ final class AddWishCell: UITableViewCell {
     // MARK: - Variables
     private let textView = UITextView()
     private let addWishButton = UIButton(type: .system)
-    var addWish: ((String) -> ())?
+    var addWish: ((String) -> Void)?
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

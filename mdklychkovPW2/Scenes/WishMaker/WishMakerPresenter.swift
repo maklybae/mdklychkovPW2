@@ -30,6 +30,4 @@ final class WishMakerPresenter: WishMakerPresentaionLogic {
     func routeToWishStoring(_ response: WishMaker.RouteToWishStoring.Response) {
         response.navigationController?.pushViewController(WishStoringAssembly.build(withColor: response.backgroundColor), animated: true)
     }
-    
-    
 }

@@ -13,7 +13,11 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         static let viewTitle: String = "WishMaker"
         static let viewTitleFontSize: CGFloat = 32
         static let viewTitleVerticalSpacing: CGFloat = 20
-        static let viewDescription: String = "This app will bring you joy and and will fulfill your wishes!\n\nThe slider will change the color of the background."
+        static let viewDescription: String = """
+This app will bring you joy and and will fulfill your wishes!
+
+The slider will change the color of the background.
+"""
         static let viewDescriptionVerticalSpacing: CGFloat = 20
         
         static let sliderMin: Double = 0
@@ -75,7 +79,10 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Actions
     @objc
     func sliderValueChanged() {
-        interactor.changeBackgroundColor(.init(red: Double(sliderRed.slider.value), green: Double(sliderGreen.slider.value), blue: Double(sliderBlue.slider.value)))
+        interactor.changeBackgroundColor(WishMaker.ChangeBackgroundColor.Request(
+            red: Double(sliderRed.slider.value),
+            green: Double(sliderGreen.slider.value),
+            blue: Double(sliderBlue.slider.value)))
     }
     
     @objc
@@ -121,7 +128,7 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text else { return }
         
-        if (textField == hexTextField) {
+        if textField == hexTextField {
             let validator = HexValidator()
             if validator.validate(text) {
                 interactor.setHexColor(.init(hex: text))
@@ -233,7 +240,6 @@ final class WishMakerViewController: UIViewController, UITextFieldDelegate {
         
         stackView.addArrangedSubview(buttonToggleSliders)
         stackView.addArrangedSubview(buttonRandomize)
-        
         
         stackView.pinBottom(to: buttonAddWish, Constants.stackBottom)
         stackView.pinHorizontal(to: view, Constants.stackLeading)
