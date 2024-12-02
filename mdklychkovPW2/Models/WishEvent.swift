@@ -8,15 +8,15 @@
 import Foundation
 import CoreData
 
-@objc(WishEventModel)
-public class WishEventModel: NSManagedObject {
+@objc(WishEvent)
+public class WishEvent: NSManagedObject {
 
 }
 
-extension WishEventModel {
+extension WishEvent {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<WishEventModel> {
-        return NSFetchRequest<WishEventModel>(entityName: "WishEventModel")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<WishEvent> {
+        return NSFetchRequest<WishEvent>(entityName: "WishEvent")
     }
 
     @NSManaged public var endDate: Date?
@@ -26,6 +26,6 @@ extension WishEventModel {
 
 }
 
-extension WishEventModel: Identifiable {
+extension WishEvent: Identifiable {
 
 }
