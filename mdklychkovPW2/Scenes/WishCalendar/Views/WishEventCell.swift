@@ -13,7 +13,7 @@ final class WishEventCell: UICollectionViewCell {
     
     // MARK: - Constants
     private enum Constants {
-        static let backgroundColor: UIColor = .systemPink
+        static let backgroundColor: UIColor = .white
         static let cornerRadius: CGFloat = 16
         static let offset: CGFloat = 5
         
@@ -57,16 +57,16 @@ final class WishEventCell: UICollectionViewCell {
     }
     
     // MARK: - Cell Configuration
-//    func configure(with event: WishEventModel) {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .medium // Use a standard date style
-//        dateFormatter.timeStyle = .none  // Exclude the time
-//        
-//        titleLabel.text = event.title
-//        descriptionLabel.text = event.description
-//        startDateLabel.text = "Start: \(dateFormatter.string(from: event.startDate))"
-//        endDateLabel.text = "End: \(dateFormatter.string(from: event.endDate))"
-//    }
+    func configure(with event: WishCalendar.DisplayedWishEvent) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium // Use a standard date style
+        dateFormatter.timeStyle = .none  // Exclude the time
+        
+        titleLabel.text = event.title
+        descriptionLabel.text = event.note
+        startDateLabel.text = "Start: \(dateFormatter.string(from: event.startDate))"
+        endDateLabel.text = "End: \(dateFormatter.string(from: event.endDate))"
+    }
     
     // MARK: - UI Configuration
     private func configureWrap() {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class WishStoringWorker {
+final class WishStoringWorker {
     // MARK: - Constants
     private enum Constants {
         static let wishesKey = "wishes"

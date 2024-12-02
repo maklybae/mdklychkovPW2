@@ -8,10 +8,15 @@
 import Foundation
 
 final class WishCalendarPresenter: WishCalendarPresentaionLogic {
-//    // MARK: - Variables
+    // MARK: - Variables
     weak var view: WishCalendarViewController?
-//        
-//    // MARK: - Public funcs
+        
+    // MARK: - Public funcs
+    func presentFetchedWishEvents(_ response: WishCalendar.FetchWishEvents.Response) {
+        let displayedWishEvents = convertToDisplayedWishEvents(response.wishEvents)
+        view?.presentFetchedWishEvents(WishCalendar.FetchWishEvents.ViewModel(displayedWishEvents: displayedWishEvents))
+    }
+    
 //    func presentFetchedWishes(_ response: WishStoring.FetchWishes.Response) {
 //        let displayedWishes = convertToDisplayedWishes(response.wishes)
 //        view?.displayFetchedWish(WishStoring.FetchWishes.ViewModel(displayedWishes: displayedWishes))
@@ -31,15 +36,19 @@ final class WishCalendarPresenter: WishCalendarPresentaionLogic {
 //        let displayedWishes = convertToDisplayedWishes(response.wishes)
 //        view?.displayEditedWish(WishStoring.EditWish.ViewModel(displayedWishes: displayedWishes, editedWishText: response.editedWishText))
 //    }
-//    
-//    // MARK: - Private funcs
-//    private func convertToDisplayedWishes(_ wishes: [Wish]) -> [WishStoring.DisplayedWish] {
-//        var displayedWishes = [WishStoring.DisplayedWish]()
-//        for wish in wishes {
-//            let displayedWish = WishStoring.DisplayedWish(text: wish.text, date: wish.date)
-//            displayedWishes.append(displayedWish)
-//        }
-//        return displayedWishes
-//    }
-//    
+    
+    // MARK: - Private funcs
+    private func convertToDisplayedWishEvents(_ wishEvents: [WishEvent]) -> [WishCalendar.DisplayedWishEvent] {
+        var displayedWishEvents: [WishCalendar.DisplayedWishEvent] = []
+        for wishEvent in wishEvents {
+            let displayedWishEvent = WishCalendar.DisplayedWishEvent(
+                title: wishEvent.title ?? "",
+                note: wishEvent.note ?? "",
+                startDate: wishEvent.startDate ?? Date(),
+                endDate: wishEvent.endDate ?? Date())
+            displayedWishEvents.append(displayedWishEvent)
+        }
+        return displayedWishEvents
+    }
+    
 }

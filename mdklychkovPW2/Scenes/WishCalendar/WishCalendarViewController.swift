@@ -19,6 +19,7 @@ final class WishCalendarViewController: UIViewController {
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
     )
+    private var displayedWishEvents: [WishCalendar.DisplayedWishEvent] = []
     
     // MARK: - Lifecycle
     init(interactor: WishCalendarBuisnessLogic, color: UIColor) {
@@ -52,7 +53,6 @@ final class WishCalendarViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .white
         collectionView.alwaysBounceVertical = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.contentInset = Constants.contentInset
@@ -60,6 +60,17 @@ final class WishCalendarViewController: UIViewController {
         collectionView.pinHorizontal(to: view)
         collectionView.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor)
         collectionView.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.collectionTop)
+        
+        fetchWishEvents()
+    }
+    
+    private func fetchWishEvents() {
+        interactor.fetchWishEvents(WishCalendar.FetchWishEvents.Request())
+    }
+    
+    public func presentFetchedWishEvents(_ viewModel: WishCalendar.FetchWishEvents.ViewModel) {
+        displayedWishEvents = viewModel.displayedWishEvents
+        collectionView.reloadData()
     }
 }
 
@@ -69,7 +80,7 @@ extension WishCalendarViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return 10
+        return displayedWishEvents.count
     }
     
     func collectionView(
@@ -80,30 +91,7 @@ extension WishCalendarViewController: UICollectionViewDataSource {
         guard let wishEventCell = cell as? WishEventCell else {
             return cell
         }
-//        var model = WishEventModel()
-//        var model: WishEventModel = WishEventModel(title: "", description: "", startDate: Date(), endDate: Date())
-//        wishEventCell.configure(
-//            with: WishEventModel(
-//                title: """
-// Tesfasdfasdfadsfasdnfkljasbdfjkbasdhjfbajbdfjlhbdfjhbajbfhajsldfbasdft
-// dfsdf
-// """,
-//                description: """
-// Tesfasdfasdfadsfasdnfkljasbdfjkbasdhjfbajbdfjlhbdfjhbajbfhajsldfbasdft
-// dfsdfтлватфыловиафовиа
-// фвафодывиафодыва
-// фывадфорывиаодфывраифыва
-// фы
-// вафывафывафыва
-// фывафывафывафыва
-// фывафывафывафывафыва
-// фыва
-// фыва
-// """,
-//                startDate: Date(),
-//                endDate: Date()
-//            )
-//        )
+        wishEventCell.configure(with: displayedWishEvents[indexPath.item])
         return cell
     }
 }
@@ -115,7 +103,6 @@ extension WishCalendarViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-//        // Adjust cell size as needed
         return CGSize(width: collectionView.bounds.width / 2 - 20, height: 300)
     }
     func collectionView(

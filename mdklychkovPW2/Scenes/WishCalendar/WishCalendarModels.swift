@@ -8,25 +8,26 @@
 import UIKit
 
 enum WishCalendar {
-//    // MARK: - DisplayedWish model
-//    struct DisplayedWish: Equatable {
-//        var text: String
-//        var date: Date
-//    }
-//    
-//    // MARK: - Use Cases
-//    // MARK: - Add wish
-//    enum AddWish {
-//        struct Request {
-//            var text: String
-//        }
-//        struct Response {
-//            var wishes: [Wish]
-//        }
-//        struct ViewModel {
-//            var displayedWishes: [DisplayedWish]
-//        }
-//    }
+    // MARK: - DisplayedWishEvents model
+    struct DisplayedWishEvent: Equatable {
+        var title: String
+        var note: String
+        var startDate: Date
+        let endDate: Date
+    }
+    
+    // MARK: - Use Cases
+    // MARK: - Fetch WishEvents
+    enum FetchWishEvents {
+        struct Request {
+        }
+        struct Response {
+            var wishEvents: [WishEvent]
+        }
+        struct ViewModel {
+            var displayedWishEvents: [DisplayedWishEvent]
+        }
+    }
 //    
 //    // MARK: - Fetch wishes
 //    enum FetchWishes {

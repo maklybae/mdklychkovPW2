@@ -10,19 +10,17 @@ import Foundation
 final class WishCalendarInteractor: WishCalendarBuisnessLogic {
     // MARK: - Variables
     private let presenter: WishCalendarPresentaionLogic
-//    private let worker = WishStoringWorker()
+    private let worker = WishCalendarWorker()
     
     init(presenter: WishCalendarPresentaionLogic) {
         self.presenter = presenter
     }
-//    
-//    // MARK: - Use Case: Add wish
-//    func addWish(_ request: WishStoring.AddWish.Request) {
-//        let wish = Wish(text: request.text, date: Date.now)
-//        worker.appendWish(wish)
-//        let wishes = worker.fetchWishes()
-//        presenter.presentAddedWish(.init(wishes: wishes))
-//    }
+    
+    // MARK: - Use Case: Fetch WishEvents
+    func fetchWishEvents(_ request: WishCalendar.FetchWishEvents.Request) {
+        let wishEvents = worker.fetchWishEvents()
+        presenter.presentFetchedWishEvents(WishCalendar.FetchWishEvents.Response(wishEvents: wishEvents))
+    }
 //    
 //    // MARK: - Delete wish
 //    func deleteWish(_ request: WishStoring.DeleteWish.Request) {
