@@ -61,8 +61,16 @@ final class WishMakerInteractor: WishMakerBuisnessLogic {
         presenter.presentSetHexColor(WishMaker.SetHexColor.Response(red: red, green: green, blue: blue, alpha: Constants.defaultAlpha))
     }
     
+    // MARK: - Use Case: Route to WishStoring view
     func routeToWishStoring(_ request: WishMaker.RouteToWishStoring.Request) {
         presenter.routeToWishStoring(WishMaker.RouteToWishStoring.Response(
+            navigationController: request.navigationController,
+            backgroundColor: request.backgroundColor))
+    }
+    
+    // MARK: - Use Case: Route to WishCalendar view
+    func routeToWishCalendar(_ request: WishMaker.RouteToWishCalendar.Request) {
+        presenter.routeToWishCalendar(WishMaker.RouteToWishCalendar.Response(
             navigationController: request.navigationController,
             backgroundColor: request.backgroundColor))
     }

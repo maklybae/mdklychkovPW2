@@ -12,6 +12,7 @@ protocol WishMakerBuisnessLogic {
     func setHexColor(_ request: WishMaker.SetHexColor.Request)
     
     func routeToWishStoring(_ request: WishMaker.RouteToWishStoring.Request)
+    func routeToWishCalendar(_ request: WishMaker.RouteToWishCalendar.Request)
 }
 
 // MARK: - PresentationLogic protocol
@@ -21,4 +22,5 @@ protocol WishMakerPresentaionLogic {
     func presentSetHexColor(_ response: WishMaker.SetHexColor.Response)
     
     func routeToWishStoring(_ response: WishMaker.RouteToWishStoring.Response)
+    func routeToWishCalendar(_ response: WishMaker.RouteToWishCalendar.Response)
 }

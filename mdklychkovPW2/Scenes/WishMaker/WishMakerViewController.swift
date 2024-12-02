@@ -120,12 +120,15 @@ The slider will change the color of the background.
         interactor.routeToWishStoring(
             WishMaker.RouteToWishStoring.Request(
                 navigationController: navigationController,
-                backgroundColor: view.backgroundColor ?? .white))
+                backgroundColor: view.backgroundColor ?? .black))
     }
     
     @objc
     private func scheduleButtonPressed() {
-        
+        interactor.routeToWishCalendar(
+            WishMaker.RouteToWishCalendar.Request(
+                navigationController: navigationController,
+                backgroundColor: view.backgroundColor ?? .black))
     }
     
     // MARK: - Public funcs
