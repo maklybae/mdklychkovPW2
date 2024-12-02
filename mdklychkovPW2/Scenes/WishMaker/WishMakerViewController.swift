@@ -132,17 +132,20 @@ The slider will change the color of the background.
     func displayChangedBackground(_ viewModel: WishMaker.ChangeBackgroundColor.ViewModel) {
         view.backgroundColor = viewModel.uiColor
         updateHexTextField(viewModel.uiColor)
+        updateButtonsColor(viewModel.uiColor)
     }
     
     func displayRandomizedBackground(_ viewModel: WishMaker.RandomizeBackgroundColor.ViewModel) {
         view.backgroundColor = viewModel.uiColor
         updateSliders(viewModel.uiColor)
         updateHexTextField(viewModel.uiColor)
+        updateButtonsColor(viewModel.uiColor)
     }
     
     func displaySetHexColor(_ viewModel: WishMaker.SetHexColor.ViewModel) {
         view.backgroundColor = viewModel.uiColor
         updateSliders(viewModel.uiColor)
+        updateButtonsColor(viewModel.uiColor)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -180,6 +183,7 @@ The slider will change the color of the background.
         configureStack()
         
         updateHexTextField(view.backgroundColor ?? .black)
+        updateButtonsColor(view.backgroundColor ?? .black)
     }
     
     private func configureTitle() {
@@ -293,5 +297,13 @@ The slider will change the color of the background.
     
     private func updateHexTextField(_ uiColor: UIColor) {
         hexTextField.text = uiColor.toHex()
+    }
+    
+    private func updateButtonsColor(_ uiColor: UIColor) {
+        buttonToggleSliders.configuration?.baseForegroundColor = uiColor
+        buttonRandomize.configuration?.baseForegroundColor = uiColor
+        
+        buttonSchedule.configuration?.baseForegroundColor = uiColor
+        buttonAddWish.configuration?.baseForegroundColor = uiColor
     }
 }
