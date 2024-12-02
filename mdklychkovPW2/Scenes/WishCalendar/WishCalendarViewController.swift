@@ -8,7 +8,7 @@
 import UIKit
 
 final class WishCalendarViewController: UIViewController {
-    enum Constants {
+    private enum Constants {
         static let contentInset: UIEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
         static let collectionTop: CGFloat = 20
     }
