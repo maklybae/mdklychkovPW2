@@ -25,9 +25,14 @@ The slider will change the color of the background.
         static let redLabel: String = "Red"
         static let greenLabel: String = "Green"
         static let blueLabel: String = "Blue"
+        
         static let stackRadius: CGFloat = 20
-        static let stackBottom: CGFloat = 50
+        static let stackBottom: CGFloat = 20
         static let stackLeading: CGFloat = 20
+        
+        static let navButtonsStackRadius: CGFloat = 20
+        static let navButtonsStackBottom: CGFloat = 50
+        static let navButtonsStackLeading: CGFloat = 20
         
         static let buttonRandomizeTitle: String = "Randomize"
         static let buttonRandomizeHeight: CGFloat = 40
@@ -42,6 +47,12 @@ The slider will change the color of the background.
         static let buttonAddWishLeading: CGFloat = 20
         static let buttonAddWishRadius: CGFloat = 15
         
+        static let buttonScheduleHeight: CGFloat = 40
+        static let buttonScheduleTitle: String = "Schedule Wish Granting"
+        static let buttonScheduleBottom: CGFloat = 40
+        static let buttonScheduleLeading: CGFloat = 20
+        static let buttonScheduleRadius: CGFloat = 15
+        
         static let hexTextFieldHeight: CGFloat = 40
         static let hexTextFieldPlaceholder: String = "Enter hex code: #RRGGBB"
     }
@@ -51,14 +62,18 @@ The slider will change the color of the background.
     
     private let titleView = UILabel()
     private let descriptionView = UILabel()
+    
     private let stackView = UIStackView()
+    private let hexTextField = UITextField()  
     private let sliderRed = CustomSlider(title: Constants.redLabel, min: Constants.sliderMin, max: Constants.sliderMax)
     private let sliderGreen = CustomSlider(title: Constants.greenLabel, min: Constants.sliderMin, max: Constants.sliderMax)
     private let sliderBlue = CustomSlider(title: Constants.blueLabel, min: Constants.sliderMin, max: Constants.sliderMax)
     private let buttonRandomize = UIButton(type: .system)
     private let buttonToggleSliders = UIButton(type: .system)
+    
+    private let navButtonsStackView = UIStackView()
     private let buttonAddWish: UIButton = UIButton(type: .system)
-    private let hexTextField = UITextField()
+    private let buttonSchedule: UIButton = UIButton(type: .system)
     
     // MARK: - Lifecycle
     init(interactor: WishMakerBuisnessLogic) {
@@ -108,6 +123,11 @@ The slider will change the color of the background.
                 backgroundColor: view.backgroundColor ?? .white))
     }
     
+    @objc
+    private func scheduleButtonPressed() {
+        
+    }
+    
     // MARK: - Public funcs
     func displayChangedBackground(_ viewModel: WishMaker.ChangeBackgroundColor.ViewModel) {
         view.backgroundColor = viewModel.uiColor
@@ -149,10 +169,14 @@ The slider will change the color of the background.
         
         configureTitle()
         configureDescription()
+        
+        configureButtonAddWish()
+        configureButtonSchedule()
+        configureNavButtonsStack()
+        
         configureButtonRandomize()
         configureButtonToggleSliders()
         configureHexTextField()
-        configureAddWishButton()
         configureStack()
         
         updateHexTextField(view.backgroundColor ?? .black)
@@ -190,18 +214,20 @@ The slider will change the color of the background.
         buttonRandomize.addTarget(self, action: #selector(buttonRandomizeTapped), for: .touchUpInside)
     }
     
-    private func configureAddWishButton() {
-        view.addSubview(buttonAddWish)
-        buttonAddWish.setHeight(Constants.buttonAddWishHeight)
-        buttonAddWish.pinBottom(to: view, Constants.buttonAddWishBottom)
-        buttonAddWish.pinHorizontal(to: view, Constants.buttonAddWishLeading)
-
-        buttonAddWish.backgroundColor = .white
-        buttonAddWish.setTitleColor(.systemPink, for: .normal)
+    private func configureButtonAddWish() {
+        buttonAddWish.configuration = UIButton.Configuration.plain()
         buttonAddWish.setTitle(Constants.buttonAddWishTitle, for: .normal)
-        buttonAddWish.layer.cornerRadius = Constants.buttonAddWishRadius
+        buttonAddWish.backgroundColor = .white
         
         buttonAddWish.addTarget(self, action: #selector(addWishButtonPressed), for: .touchUpInside)
+    }
+    
+    private func configureButtonSchedule() {
+        buttonSchedule.configuration = UIButton.Configuration.plain()
+        buttonSchedule.setTitle(Constants.buttonScheduleTitle, for: .normal)
+        buttonSchedule.backgroundColor = .white
+        
+        buttonSchedule.addTarget(self, action: #selector(scheduleButtonPressed), for: .touchUpInside)
     }
 
     private func configureButtonToggleSliders() {
@@ -224,6 +250,20 @@ The slider will change the color of the background.
         hexTextField.delegate = self
     }
     
+    private func configureNavButtonsStack() {
+        navButtonsStackView.axis = .horizontal
+        view.addSubview(navButtonsStackView)
+        
+        navButtonsStackView.layer.cornerRadius = Constants.navButtonsStackRadius
+        navButtonsStackView.clipsToBounds = true
+        
+        navButtonsStackView.addArrangedSubview(buttonSchedule)
+        navButtonsStackView.addArrangedSubview(buttonAddWish)
+        
+        navButtonsStackView.pinHorizontal(to: view, Constants.navButtonsStackLeading)
+        navButtonsStackView.pinBottom(to: view, Constants.navButtonsStackBottom)
+    }
+    
     private func configureStack() {
         stackView.axis = .vertical
         view.addSubview(stackView)
@@ -241,7 +281,7 @@ The slider will change the color of the background.
         stackView.addArrangedSubview(buttonToggleSliders)
         stackView.addArrangedSubview(buttonRandomize)
         
-        stackView.pinBottom(to: buttonAddWish, Constants.stackBottom)
+        stackView.pinBottom(to: navButtonsStackView.topAnchor, Constants.stackBottom)
         stackView.pinHorizontal(to: view, Constants.stackLeading)
     }
     
