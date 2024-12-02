@@ -80,28 +80,30 @@ extension WishCalendarViewController: UICollectionViewDataSource {
         guard let wishEventCell = cell as? WishEventCell else {
             return cell
         }
-        wishEventCell.configure(
-            with: WishEventModel(
-                title: """
-Tesfasdfasdfadsfasdnfkljasbdfjkbasdhjfbajbdfjlhbdfjhbajbfhajsldfbasdft
-dfsdf
-""",
-                description: """
-Tesfasdfasdfadsfasdnfkljasbdfjkbasdhjfbajbdfjlhbdfjhbajbfhajsldfbasdft
-dfsdfтлватфыловиафовиа
-фвафодывиафодыва
-фывадфорывиаодфывраифыва
-фы
-вафывафывафыва
-фывафывафывафыва
-фывафывафывафывафыва
-фыва
-фыва
-""",
-                startDate: Date(),
-                endDate: Date()
-            )
-        )
+//        var model = WishEventModel()
+//        var model: WishEventModel = WishEventModel(title: "", description: "", startDate: Date(), endDate: Date())
+//        wishEventCell.configure(
+//            with: WishEventModel(
+//                title: """
+// Tesfasdfasdfadsfasdnfkljasbdfjkbasdhjfbajbdfjlhbdfjhbajbfhajsldfbasdft
+// dfsdf
+// """,
+//                description: """
+// Tesfasdfasdfadsfasdnfkljasbdfjkbasdhjfbajbdfjlhbdfjhbajbfhajsldfbasdft
+// dfsdfтлватфыловиафовиа
+// фвафодывиафодыва
+// фывадфорывиаодфывраифыва
+// фы
+// вафывафывафыва
+// фывафывафывафыва
+// фывафывафывафывафыва
+// фыва
+// фыва
+// """,
+//                startDate: Date(),
+//                endDate: Date()
+//            )
+//        )
         return cell
     }
 }

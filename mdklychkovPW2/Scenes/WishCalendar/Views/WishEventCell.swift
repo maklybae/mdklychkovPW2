@@ -57,16 +57,16 @@ final class WishEventCell: UICollectionViewCell {
     }
     
     // MARK: - Cell Configuration
-    func configure(with event: WishEventModel) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium // Use a standard date style
-        dateFormatter.timeStyle = .none  // Exclude the time
-        
-        titleLabel.text = event.title
-        descriptionLabel.text = event.description
-        startDateLabel.text = "Start: \(dateFormatter.string(from: event.startDate))"
-        endDateLabel.text = "End: \(dateFormatter.string(from: event.endDate))"
-    }
+//    func configure(with event: WishEventModel) {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateStyle = .medium // Use a standard date style
+//        dateFormatter.timeStyle = .none  // Exclude the time
+//        
+//        titleLabel.text = event.title
+//        descriptionLabel.text = event.description
+//        startDateLabel.text = "Start: \(dateFormatter.string(from: event.startDate))"
+//        endDateLabel.text = "End: \(dateFormatter.string(from: event.endDate))"
+//    }
     
     // MARK: - UI Configuration
     private func configureWrap() {
