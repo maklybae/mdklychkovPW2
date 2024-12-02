@@ -38,14 +38,24 @@ final class WishCalendarViewController: UIViewController {
     }
     
     private func configureCollection() {
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.itemSize = CGSize(width: 180, height: 180)
+            layout.minimumInteritemSpacing = 10
+            layout.minimumLineSpacing = 10
+            layout.invalidateLayout()
+        }
+        
+        collectionView.register(
+            WishEventCell.self,
+            forCellWithReuseIdentifier: WishEventCell.reuseIdentifier
+        )
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
         collectionView.alwaysBounceVertical = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.contentInset = Constants.contentInset
-        /* Temporary line */
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         view.addSubview(collectionView)
         collectionView.pinHorizontal(to: view)
         collectionView.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor)
@@ -56,18 +66,42 @@ final class WishCalendarViewController: UIViewController {
 // MARK: - UICollectionViewDataSource
 extension WishCalendarViewController: UICollectionViewDataSource {
     func collectionView(
-        _
-        collectionView: UICollectionView,
+        _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
         return 10
     }
+    
     func collectionView(
-        _
-        collectionView: UICollectionView,
+        _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WishEventCell.reuseIdentifier, for: indexPath)
+        guard let wishEventCell = cell as? WishEventCell else {
+            return cell
+        }
+        wishEventCell.configure(
+            with: WishEventModel(
+                title: """
+Tesfasdfasdfadsfasdnfkljasbdfjkbasdhjfbajbdfjlhbdfjhbajbfhajsldfbasdft
+dfsdf
+""",
+                description: """
+Tesfasdfasdfadsfasdnfkljasbdfjkbasdhjfbajbdfjlhbdfjhbajbfhajsldfbasdft
+dfsdfтлватфыловиафовиа
+фвафодывиафодыва
+фывадфорывиаодфывраифыва
+фы
+вафывафывафыва
+фывафывафывафыва
+фывафывафывафывафыва
+фыва
+фыва
+""",
+                startDate: Date(),
+                endDate: Date()
+            )
+        )
         return cell
     }
 }
@@ -75,17 +109,15 @@ extension WishCalendarViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension WishCalendarViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
-        _
-        collectionView: UICollectionView,
+        _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        // Adjust cell size as needed
-        return CGSize(width: collectionView.bounds.width - 10, height: 100)
+//        // Adjust cell size as needed
+        return CGSize(width: collectionView.bounds.width / 2 - 20, height: 300)
     }
     func collectionView(
-        _
-        collectionView: UICollectionView,
+        _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
         print("Cell tapped at index \(indexPath.item)")

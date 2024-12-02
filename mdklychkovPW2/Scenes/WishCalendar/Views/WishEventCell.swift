@@ -13,13 +13,25 @@ final class WishEventCell: UICollectionViewCell {
     
     // MARK: - Constants
     private enum Constants {
-        static let backgroundColor: UIColor = .white
+        static let backgroundColor: UIColor = .systemPink
         static let cornerRadius: CGFloat = 16
         static let offset: CGFloat = 5
         
         static let titleTop: CGFloat = 16
         static let titleLeading: CGFloat = 16
-        static let titleFont: UIFont = .systemFont(ofSize: 16, weight: .medium)
+        static let titleFont: UIFont = .systemFont(ofSize: 20, weight: .bold)
+        
+        static let descriptionTop: CGFloat = 4
+        static let descriptionLeading: CGFloat = 16
+        static let descriptionFont: UIFont = .systemFont(ofSize: 16, weight: .regular)
+        
+        static let startDateTop: CGFloat = 8
+        static let startDateLeading: CGFloat = 16
+        static let startDateFont: UIFont = .systemFont(ofSize: 16, weight: .regular)
+        
+        static let endDateTop: CGFloat = 8
+        static let endDateLeading: CGFloat = 16
+        static let endDateFont: UIFont = .systemFont(ofSize: 16, weight: .regular)
     }
     
     // MARK: - Variables
@@ -46,10 +58,14 @@ final class WishEventCell: UICollectionViewCell {
     
     // MARK: - Cell Configuration
     func configure(with event: WishEventModel) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium // Use a standard date style
+        dateFormatter.timeStyle = .none  // Exclude the time
+        
         titleLabel.text = event.title
         descriptionLabel.text = event.description
-        startDateLabel.text = "Start Date: \(event.startDate)"
-        endDateLabel.text = "End Date: \(event.endDate)"
+        startDateLabel.text = "Start: \(dateFormatter.string(from: event.startDate))"
+        endDateLabel.text = "End: \(dateFormatter.string(from: event.endDate))"
     }
     
     // MARK: - UI Configuration
@@ -59,31 +75,55 @@ final class WishEventCell: UICollectionViewCell {
         wrapView.layer.cornerRadius = Constants.cornerRadius
         wrapView.backgroundColor = Constants.backgroundColor
     }
+    
     private func configureTitleLabel() {
-        addSubview(titleLabel)
+        wrapView.addSubview(titleLabel)
         titleLabel.textColor = .black
+        titleLabel.numberOfLines = 1
+        titleLabel.lineBreakMode = .byTruncatingTail
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.8
         titleLabel.pinTop(to: wrapView, Constants.titleTop)
         titleLabel.font = Constants.titleFont
-        titleLabel.pinLeft(to: wrapView, Constants.titleLeading)
+        titleLabel.pinHorizontal(to: wrapView, Constants.titleLeading)
     }
-    
-    private func configureDescriptionLabel() {
         
+    private func configureDescriptionLabel() {
+        wrapView.addSubview(descriptionLabel)
+        descriptionLabel.textColor = .black
+        descriptionLabel.numberOfLines = 10
+        descriptionLabel.lineBreakMode = .byTruncatingTail
+        descriptionLabel.adjustsFontSizeToFitWidth = true
+        descriptionLabel.minimumScaleFactor = 0.8
+        descriptionLabel.pinTop(to: titleLabel.bottomAnchor, Constants.descriptionTop)
+        descriptionLabel.pinHorizontal(to: wrapView, Constants.descriptionLeading)
     }
     
     private func configureStartDateLabel() {
-
+        wrapView.addSubview(startDateLabel)
+        startDateLabel.textColor = .black
+        startDateLabel.numberOfLines = 1
+        startDateLabel.lineBreakMode = .byTruncatingTail
+        startDateLabel.adjustsFontSizeToFitWidth = true
+        startDateLabel.minimumScaleFactor = 0.8
+        startDateLabel.pinTop(to: descriptionLabel.bottomAnchor, Constants.startDateTop)
+        startDateLabel.pinHorizontal(to: wrapView, Constants.startDateLeading)
     }
     
     private func configureEndDateLabel() {
-        
+        wrapView.addSubview(endDateLabel)
+        endDateLabel.textColor = .black
+        endDateLabel.numberOfLines = 1
+        endDateLabel.lineBreakMode = .byTruncatingTail
+        endDateLabel.adjustsFontSizeToFitWidth = true
+        endDateLabel.minimumScaleFactor = 0.8
+        endDateLabel.pinTop(to: startDateLabel.bottomAnchor, Constants.endDateTop)
+        endDateLabel.pinLeft(to: wrapView, Constants.endDateLeading)
     }
     
     // MARK: Actions
     
-    
     // MARK: - Public funcs
-    
     
     // MARK: - Private funcs
     
