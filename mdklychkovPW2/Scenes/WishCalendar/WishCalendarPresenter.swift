@@ -17,25 +17,9 @@ final class WishCalendarPresenter: WishCalendarPresentaionLogic {
         view?.presentFetchedWishEvents(WishCalendar.FetchWishEvents.ViewModel(displayedWishEvents: displayedWishEvents))
     }
     
-//    func presentFetchedWishes(_ response: WishStoring.FetchWishes.Response) {
-//        let displayedWishes = convertToDisplayedWishes(response.wishes)
-//        view?.displayFetchedWish(WishStoring.FetchWishes.ViewModel(displayedWishes: displayedWishes))
-//    }
-//    
-//    func presentAddedWish(_ response: WishStoring.AddWish.Response) {
-//        let displayedWishes = convertToDisplayedWishes(response.wishes)
-//        view?.displayAddedWish(WishStoring.AddWish.ViewModel(displayedWishes: displayedWishes))
-//    }
-//    
-//    func presentDeletedWish(_ response: WishStoring.DeleteWish.Response) {
-//        let displayedWishes = convertToDisplayedWishes(response.wishes)
-//        view?.displayDeletedWish(WishStoring.DeleteWish.ViewModel(displayedWishes: displayedWishes))
-//    }
-//    
-//    func presentEditedWish(_ response: WishStoring.EditWish.Response) {
-//        let displayedWishes = convertToDisplayedWishes(response.wishes)
-//        view?.displayEditedWish(WishStoring.EditWish.ViewModel(displayedWishes: displayedWishes, editedWishText: response.editedWishText))
-//    }
+    func routeToAddWishEvent(_ response: WishCalendar.RouteToAddWishEvent.Response) {
+        response.navigationController?.pushViewController(WishStoringAssembly.build(withColor: response.backgroundColor), animated: true) // change
+    }
     
     // MARK: - Private funcs
     private func convertToDisplayedWishEvents(_ wishEvents: [WishEvent]) -> [WishCalendar.DisplayedWishEvent] {

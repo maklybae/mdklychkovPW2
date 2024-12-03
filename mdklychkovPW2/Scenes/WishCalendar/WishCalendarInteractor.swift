@@ -21,25 +21,11 @@ final class WishCalendarInteractor: WishCalendarBuisnessLogic {
         let wishEvents = worker.fetchWishEvents()
         presenter.presentFetchedWishEvents(WishCalendar.FetchWishEvents.Response(wishEvents: wishEvents))
     }
-//    
-//    // MARK: - Delete wish
-//    func deleteWish(_ request: WishStoring.DeleteWish.Request) {
-//        worker.deleteWish(atIndex: request.index)
-//        let wishes = worker.fetchWishes()
-//        presenter.presentDeletedWish(.init(wishes: wishes))
-//    }
-//    
-//    // MARK: - Edit wish
-//    func editWish(_ request: WishStoring.EditWish.Request) {
-//        guard let wish = worker.getWish(atIndex: request.index) else { return }
-//        worker.deleteWish(atIndex: request.index)
-//        let wishes = worker.fetchWishes()
-//        presenter.presentEditedWish(.init(wishes: wishes, editedWishText: wish.text))
-//    }
-//    
-//    // MARK: - Fetch wishes
-//    func fetchWishes(_ request: WishStoring.FetchWishes.Request) {
-//        let wishes = worker.fetchWishes()
-//        presenter.presentFetchedWishes(.init(wishes: wishes))
-//    }
+    
+    // MARK: - Route to AddWishEvent
+    func routeToAddWishEvent(_ request: WishCalendar.RouteToAddWishEvent.Request) {
+        presenter.routeToAddWishEvent(WishCalendar.RouteToAddWishEvent.Response(
+            navigationController: request.navigationController,
+            backgroundColor: request.backgroundColor))
+    }
 }

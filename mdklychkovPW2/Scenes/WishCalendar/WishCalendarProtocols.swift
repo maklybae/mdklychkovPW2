@@ -8,9 +8,13 @@
 // MARK: - BuisnessLogic protocol
 protocol WishCalendarBuisnessLogic {
     func fetchWishEvents(_ request: WishCalendar.FetchWishEvents.Request)
+    
+    func routeToAddWishEvent(_ request: WishCalendar.RouteToAddWishEvent.Request)
 }
 
 // MARK: - PresentationLogic protocol
 protocol WishCalendarPresentaionLogic {
     func presentFetchedWishEvents(_ response: WishCalendar.FetchWishEvents.Response)
+    
+    func routeToAddWishEvent(_ response: WishCalendar.RouteToAddWishEvent.Response)
 }

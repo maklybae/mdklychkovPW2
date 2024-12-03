@@ -28,43 +28,15 @@ enum WishCalendar {
             var displayedWishEvents: [DisplayedWishEvent]
         }
     }
-//    
-//    // MARK: - Fetch wishes
-//    enum FetchWishes {
-//        struct Request {}
-//        struct Response {
-//            var wishes: [Wish]
-//        }
-//        struct ViewModel {
-//            var displayedWishes: [DisplayedWish]
-//        }
-//    }
-//    
-//    // MARK: - Delete wish
-//    enum DeleteWish {
-//        struct Request {
-//            var index: Int
-//        }
-//        struct Response {
-//            var wishes: [Wish]
-//        }
-//        struct ViewModel {
-//            var displayedWishes: [DisplayedWish]
-//        }
-//    }
-//    
-//    // MARK: - Edit wish
-//    enum EditWish {
-//        struct Request {
-//            var index: Int
-//        }
-//        struct Response {
-//            var wishes: [Wish]
-//            var editedWishText: String
-//        }
-//        struct ViewModel {
-//            var displayedWishes: [DisplayedWish]
-//            var editedWishText: String
-//        }
-//    }
+
+    enum RouteToAddWishEvent {
+        struct Request {
+            var navigationController: UINavigationController?
+            var backgroundColor: UIColor
+        }
+        struct Response {
+            var navigationController: UINavigationController?
+            var backgroundColor: UIColor
+        }
+    }
 }

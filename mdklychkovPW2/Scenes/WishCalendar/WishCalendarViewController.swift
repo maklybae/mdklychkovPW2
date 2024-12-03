@@ -15,6 +15,7 @@ final class WishCalendarViewController: UIViewController {
     
     // MARK: - Variables
     private let interactor: WishCalendarBuisnessLogic
+    private var addButton: UIBarButtonItem = UIBarButtonItem()
     private let collectionView: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
@@ -35,7 +36,18 @@ final class WishCalendarViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        configureNavBar()
         configureCollection()
+    }
+    
+    private func configureNavBar() {
+        addButton = UIBarButtonItem(
+            image: UIImage(systemName: "plus"),
+            style: .plain,
+            target: self,
+            action: #selector(addButtonPressed)
+        )
+        navigationItem.rightBarButtonItem = addButton
     }
     
     private func configureCollection() {
@@ -56,6 +68,8 @@ final class WishCalendarViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.contentInset = Constants.contentInset
+        collectionView.backgroundColor = .clear
+        
         view.addSubview(collectionView)
         collectionView.pinHorizontal(to: view)
         collectionView.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor)
@@ -66,6 +80,11 @@ final class WishCalendarViewController: UIViewController {
     
     private func fetchWishEvents() {
         interactor.fetchWishEvents(WishCalendar.FetchWishEvents.Request())
+    }
+    
+    @objc
+    private func addButtonPressed() {
+        
     }
     
     public func presentFetchedWishEvents(_ viewModel: WishCalendar.FetchWishEvents.ViewModel) {
