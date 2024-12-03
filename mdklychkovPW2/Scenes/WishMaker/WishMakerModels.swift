@@ -68,4 +68,16 @@ enum WishMaker {
             var backgroundColor: UIColor
         }
     }
+    
+    // MARK: - Route to WishCalendar view
+    enum RouteToWishCalendar {
+        struct Request {
+            var navigationController: UINavigationController?
+            var backgroundColor: UIColor
+        }
+        struct Response {
+            var navigationController: UINavigationController?
+            var backgroundColor: UIColor
+        }
+    }
 }

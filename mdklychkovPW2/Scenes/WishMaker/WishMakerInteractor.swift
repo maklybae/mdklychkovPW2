@@ -24,7 +24,11 @@ final class WishMakerInteractor: WishMakerBuisnessLogic {
     
     // MARK: - Use Case: Change background color
     func changeBackgroundColor(_ request: WishMaker.ChangeBackgroundColor.Request) {
-        presenter.presentChangedBackgroundColor(WishMaker.ChangeBackgroundColor.Response(red: request.red, green: request.green, blue: request.blue, alpha: Constants.defaultAlpha))
+        presenter.presentChangedBackgroundColor(WishMaker.ChangeBackgroundColor.Response(
+            red: request.red,
+            green: request.green,
+            blue: request.blue,
+            alpha: Constants.defaultAlpha))
     }
     
     // MARK: - Use Case: Randomize background color
@@ -35,7 +39,11 @@ final class WishMakerInteractor: WishMakerBuisnessLogic {
         let intColor = Int.random(in: 0...(1 << Constants.hexColorBinaryExp))
         let (red, green, blue) = extractRGBComponents(from: intColor)
 
-        presenter.presentRandomizedBackgroundColor(WishMaker.RandomizeBackgroundColor.Response(red: red, green: green, blue: blue, alpha: Constants.defaultAlpha))
+        presenter.presentRandomizedBackgroundColor(WishMaker.RandomizeBackgroundColor.Response(
+            red: red,
+            green: green,
+            blue: blue,
+            alpha: Constants.defaultAlpha))
     }
     
     // MARK: - Use Case: Set hex color
@@ -53,11 +61,22 @@ final class WishMakerInteractor: WishMakerBuisnessLogic {
         presenter.presentSetHexColor(WishMaker.SetHexColor.Response(red: red, green: green, blue: blue, alpha: Constants.defaultAlpha))
     }
     
+    // MARK: - Use Case: Route to WishStoring view
     func routeToWishStoring(_ request: WishMaker.RouteToWishStoring.Request) {
-        presenter.routeToWishStoring(WishMaker.RouteToWishStoring.Response(navigationController: request.navigationController, backgroundColor: request.backgroundColor))
+        presenter.routeToWishStoring(WishMaker.RouteToWishStoring.Response(
+            navigationController: request.navigationController,
+            backgroundColor: request.backgroundColor))
+    }
+    
+    // MARK: - Use Case: Route to WishCalendar view
+    func routeToWishCalendar(_ request: WishMaker.RouteToWishCalendar.Request) {
+        presenter.routeToWishCalendar(WishMaker.RouteToWishCalendar.Response(
+            navigationController: request.navigationController,
+            backgroundColor: request.backgroundColor))
     }
     
     // MARK: - Private funcs
+    // swiftlint:disable:next large_tuple
     private func extractRGBComponents(from hex: Int) -> (r: Double, g: Double, b: Double) {
         var intColor: Int = hex
         

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 final class WishStoringInteractor: WishStoringBuisnessLogic {
     // MARK: - Variables
     private let presenter: WishStoringPresentaionLogic

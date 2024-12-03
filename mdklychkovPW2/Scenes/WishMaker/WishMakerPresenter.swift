@@ -31,5 +31,7 @@ final class WishMakerPresenter: WishMakerPresentaionLogic {
         response.navigationController?.pushViewController(WishStoringAssembly.build(withColor: response.backgroundColor), animated: true)
     }
     
-    
+    func routeToWishCalendar(_ response: WishMaker.RouteToWishCalendar.Response) {
+        response.navigationController?.pushViewController(WishCalendarAssembly.build(withColor: response.backgroundColor), animated: true)
+    }
 }
