@@ -73,6 +73,21 @@
 
         return nil
     }
+     
+     func fetchWishEvent(byIndex index: Int) -> WishEvent? {
+         let context = persistentContainer.viewContext
+         let fetchRequest = NSFetchRequest<WishEvent>(entityName: "WishEvent")
+         fetchRequest.fetchLimit = 1
+         fetchRequest.fetchOffset = index
+
+         do {
+             return try context.fetch(fetchRequest).first
+         } catch let error {
+             print("Failed to fetch by index: \(error)")
+         }
+
+         return nil
+     }
 
     func updateWishEvent(wishEvent: WishEvent, newTitle: String?, newNote: String?, newStartDate: Date?, newEndDate: Date?) {
         let context = persistentContainer.viewContext

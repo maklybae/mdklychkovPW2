@@ -28,6 +28,16 @@ enum WishCalendar {
             var displayedWishEvents: [DisplayedWishEvent]
         }
     }
+    
+    // MARK: - Add WishEvent to Calendar
+    enum AddWishEventToCalendar {
+        struct Request {
+            var wishEventIndex: Int
+        }
+        struct Response {
+            var success: Bool
+        }
+    }
 
     enum RouteToAddWishEvent {
         struct Request {

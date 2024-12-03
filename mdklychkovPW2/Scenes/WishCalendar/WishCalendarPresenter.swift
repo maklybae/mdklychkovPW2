@@ -10,11 +10,15 @@ import Foundation
 final class WishCalendarPresenter: WishCalendarPresentaionLogic {
     // MARK: - Variables
     weak var view: WishCalendarViewController?
-        
+    
     // MARK: - Public funcs
     func presentFetchedWishEvents(_ response: WishCalendar.FetchWishEvents.Response) {
         let displayedWishEvents = convertToDisplayedWishEvents(response.wishEvents)
-        view?.presentFetchedWishEvents(WishCalendar.FetchWishEvents.ViewModel(displayedWishEvents: displayedWishEvents))
+        view?.displayFetchedWishEvents(WishCalendar.FetchWishEvents.ViewModel(displayedWishEvents: displayedWishEvents))
+    }
+    
+    func presentAddWishEventToCalendar(_ response: WishCalendar.AddWishEventToCalendar.Response) {
+        view?.displayStatus(response.success)
     }
     
     func routeToAddWishEvent(_ response: WishCalendar.RouteToAddWishEvent.Response) {

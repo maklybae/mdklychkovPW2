@@ -12,4 +12,9 @@ final class WishCalendarWorker {
     public func fetchWishEvents() -> [WishEvent] {
         return CoreDataManager.shared.fetchWishEvents() ?? []
     }
+    
+    public func fetchWishEvent(byIndex index: Int) -> WishEvent? {
+        let wishEvent = CoreDataManager.shared.fetchWishEvent(byIndex: index)
+        return wishEvent
+    }
 }
