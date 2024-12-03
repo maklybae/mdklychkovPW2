@@ -17,6 +17,8 @@ final class WishEventCell: UICollectionViewCell {
         static let cornerRadius: CGFloat = 16
         static let offset: CGFloat = 5
         
+        static let minimumScaleFactor: CGFloat = 0.8
+        
         static let titleTop: CGFloat = 16
         static let titleLeading: CGFloat = 16
         static let titleFont: UIFont = .systemFont(ofSize: 20, weight: .bold)
@@ -24,6 +26,7 @@ final class WishEventCell: UICollectionViewCell {
         static let descriptionTop: CGFloat = 4
         static let descriptionLeading: CGFloat = 16
         static let descriptionFont: UIFont = .systemFont(ofSize: 16, weight: .regular)
+        static let descriptionNumberOfLines: Int = 10
         
         static let startDateTop: CGFloat = 8
         static let startDateLeading: CGFloat = 16
@@ -82,7 +85,7 @@ final class WishEventCell: UICollectionViewCell {
         titleLabel.numberOfLines = 1
         titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.adjustsFontSizeToFitWidth = true
-        titleLabel.minimumScaleFactor = 0.8
+        titleLabel.minimumScaleFactor = Constants.minimumScaleFactor
         titleLabel.pinTop(to: wrapView, Constants.titleTop)
         titleLabel.font = Constants.titleFont
         titleLabel.pinHorizontal(to: wrapView, Constants.titleLeading)
@@ -91,10 +94,10 @@ final class WishEventCell: UICollectionViewCell {
     private func configureDescriptionLabel() {
         wrapView.addSubview(descriptionLabel)
         descriptionLabel.textColor = .black
-        descriptionLabel.numberOfLines = 10
+        descriptionLabel.numberOfLines = Constants.descriptionNumberOfLines
         descriptionLabel.lineBreakMode = .byTruncatingTail
         descriptionLabel.adjustsFontSizeToFitWidth = true
-        descriptionLabel.minimumScaleFactor = 0.8
+        descriptionLabel.minimumScaleFactor = Constants.minimumScaleFactor
         descriptionLabel.pinTop(to: titleLabel.bottomAnchor, Constants.descriptionTop)
         descriptionLabel.pinHorizontal(to: wrapView, Constants.descriptionLeading)
     }
@@ -105,7 +108,7 @@ final class WishEventCell: UICollectionViewCell {
         startDateLabel.numberOfLines = 1
         startDateLabel.lineBreakMode = .byTruncatingTail
         startDateLabel.adjustsFontSizeToFitWidth = true
-        startDateLabel.minimumScaleFactor = 0.8
+        startDateLabel.minimumScaleFactor = Constants.minimumScaleFactor
         startDateLabel.pinTop(to: descriptionLabel.bottomAnchor, Constants.startDateTop)
         startDateLabel.pinHorizontal(to: wrapView, Constants.startDateLeading)
     }

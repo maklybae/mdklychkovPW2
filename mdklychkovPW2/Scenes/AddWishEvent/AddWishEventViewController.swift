@@ -10,10 +10,28 @@ import UIKit
 
 final class AddWishEventViewController: UIViewController {
     
+    // MARK: - Constants
+    private enum Constants {
+        static let stackViewSpacing: CGFloat = 16
+        static let padding: CGFloat = 16
+        static let noteTextViewHeight: CGFloat = 100
+        static let saveButtonHeight: CGFloat = 44
+        static let saveButtonCornerRadius: CGFloat = 8
+        static let titleTextFieldPlaceholder = "Enter title"
+        static let saveButtonTitle = "Save"
+        static let datePickerMode: UIDatePicker.Mode = .dateAndTime
+        
+        static let noteTextViewBorderWidth: CGFloat = 1
+        static let noteTextViewCornerRadius: CGFloat = 5
+        static let noteTextViewFontSize: CGFloat = 16
+        static let noteTextViewBorderColor = UIColor.gray.cgColor
+        
+    }
+    
     // MARK: - Variables
     private let interactor: AddWishEventBuisnessLogic
     
-    private let stackView =  UIStackView()
+    private let stackView = UIStackView()
     private let titleTextField = UITextField()
     private let startDatePicker = UIDatePicker()
     private let endDatePicker = UIDatePicker()
@@ -40,7 +58,7 @@ final class AddWishEventViewController: UIViewController {
     
     private func configureUI() {
         stackView.axis = .vertical
-        stackView.spacing = 16
+        stackView.spacing = Constants.stackViewSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView.addArrangedSubview(titleTextField)
@@ -50,53 +68,47 @@ final class AddWishEventViewController: UIViewController {
         stackView.addArrangedSubview(saveButton)
         
         view.addSubview(stackView)
+        stackView.pinHorizontal(to: view, Constants.padding)
+        stackView.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.padding)
         
-        // Устанавливаем ограничения
-        NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
-        ])
-        
-        // Конфигурируем дочерние элементы
-        configuretitleTextField()
+        configureTitleTextField()
         configureNoteTextView()
         configureStartDatePicker()
         configureEndDatePicker()
         configureSaveButton()
     }
-
-    private func configuretitleTextField() {
-        titleTextField.placeholder = "Enter title"
+    
+    private func configureTitleTextField() {
+        titleTextField.placeholder = Constants.titleTextFieldPlaceholder
         titleTextField.borderStyle = .roundedRect
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
     }
-
+    
     private func configureNoteTextView() {
-        noteTextView.layer.borderWidth = 1
-        noteTextView.layer.borderColor = UIColor.gray.cgColor
-        noteTextView.layer.cornerRadius = 5
-        noteTextView.font = UIFont.systemFont(ofSize: 16)
+        noteTextView.layer.borderWidth = Constants.noteTextViewBorderWidth
+        noteTextView.layer.borderColor = Constants.noteTextViewBorderColor
+        noteTextView.layer.cornerRadius = Constants.noteTextViewCornerRadius
+        noteTextView.font = UIFont.systemFont(ofSize: Constants.noteTextViewFontSize)
         noteTextView.translatesAutoresizingMaskIntoConstraints = false
-        noteTextView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        noteTextView.heightAnchor.constraint(equalToConstant: Constants.noteTextViewHeight).isActive = true
     }
-
+    
     private func configureStartDatePicker() {
-        startDatePicker.datePickerMode = .dateAndTime
+        startDatePicker.datePickerMode = Constants.datePickerMode
         startDatePicker.translatesAutoresizingMaskIntoConstraints = false
     }
-
+    
     private func configureEndDatePicker() {
-        endDatePicker.datePickerMode = .dateAndTime
+        endDatePicker.datePickerMode = Constants.datePickerMode
         endDatePicker.translatesAutoresizingMaskIntoConstraints = false
     }
-
+    
     private func configureSaveButton() {
-        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitle(Constants.saveButtonTitle, for: .normal)
         saveButton.setTitleColor(.white, for: .normal)
         saveButton.backgroundColor = .systemBlue
-        saveButton.layer.cornerRadius = 8
-        saveButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        saveButton.layer.cornerRadius = Constants.saveButtonCornerRadius
+        saveButton.heightAnchor.constraint(equalToConstant: Constants.saveButtonHeight).isActive = true
         saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
     }
     

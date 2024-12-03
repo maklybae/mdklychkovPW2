@@ -11,6 +11,15 @@ final class WishCalendarViewController: UIViewController {
     private enum Constants {
         static let contentInset: UIEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
         static let collectionTop: CGFloat = 20
+        static let collectionItemWidth: CGFloat = 180
+        static let collectionItemHeight: CGFloat = 180
+        static let collectionItemSpacing: CGFloat = 10
+        static let messageLabelAlphaDuration: TimeInterval = 0.3
+        static let messageLabelHideDelay: TimeInterval = 1.0
+        static let messageLabelCornerRadius: CGFloat = 10
+        static let messageLabelAlpha: CGFloat = 0.7
+        static let alertTitle: String = "Add to Calendar"
+        static let alertMessage: String = "Are you sure you want to add this wish event to your calendar?"
     }
     
     // MARK: - Variables
@@ -26,7 +35,6 @@ final class WishCalendarViewController: UIViewController {
     init(interactor: WishCalendarBuisnessLogic, color: UIColor) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
-        
         view.backgroundColor = color
     }
     
@@ -57,9 +65,9 @@ final class WishCalendarViewController: UIViewController {
     
     private func configureCollection() {
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.itemSize = CGSize(width: 180, height: 180)
-            layout.minimumInteritemSpacing = 10
-            layout.minimumLineSpacing = 10
+            layout.itemSize = CGSize(width: Constants.collectionItemWidth, height: Constants.collectionItemHeight)
+            layout.minimumInteritemSpacing = Constants.collectionItemSpacing
+            layout.minimumLineSpacing = Constants.collectionItemSpacing
             layout.invalidateLayout()
         }
         
@@ -100,24 +108,19 @@ final class WishCalendarViewController: UIViewController {
     public func displayStatus(_ status: Bool) {
         let messageLabel = UILabel()
         
-        if status {
-            messageLabel.text = "Success"
-        } else {
-            messageLabel.text = "Error"
-        }
-        
+        messageLabel.text = status ? "Success" : "Error"
         messageLabel.textColor = .white
-        messageLabel.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        messageLabel.backgroundColor = UIColor.black.withAlphaComponent(Constants.messageLabelAlpha)
         messageLabel.textAlignment = .center
-        messageLabel.layer.cornerRadius = 10
+        messageLabel.layer.cornerRadius = Constants.messageLabelCornerRadius
         messageLabel.clipsToBounds = true
         view.addSubview(messageLabel)
         messageLabel.pinCenter(to: view)
         
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: Constants.messageLabelAlphaDuration, animations: {
             messageLabel.alpha = 1
         }, completion: { _ in
-            UIView.animate(withDuration: 0.3, delay: 1, options: [], animations: {
+            UIView.animate(withDuration: Constants.messageLabelAlphaDuration, delay: Constants.messageLabelHideDelay, options: [], animations: {
                 messageLabel.alpha = 0
             }, completion: { _ in
                 messageLabel.removeFromSuperview()
@@ -155,7 +158,7 @@ extension WishCalendarViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: collectionView.bounds.width / 2 - 20, height: 300)
+        return CGSize(width: collectionView.bounds.width / 2 - Constants.collectionItemSpacing - 10, height: 300)
     }
     
     func collectionView(
@@ -163,25 +166,22 @@ extension WishCalendarViewController: UICollectionViewDelegateFlowLayout {
         didSelectItemAt indexPath: IndexPath
     ) {
         let alertController = UIAlertController(
-            title: "Add to Calendar",
-            message: "Are you sure you want to add this wish event to your calendar?",
+            title: Constants.alertTitle,
+            message: Constants.alertMessage,
             preferredStyle: .alert
         )
         
         // Кнопка подтверждения
-        let confirmAction = UIAlertAction(title: "Подтвердить", style: .default) { _ in
+        let confirmAction = UIAlertAction(title: "Yes", style: .default) { _ in
             // Вызов метода для добавления в календарь
             self.interactor.addWishEventToCalendar(WishCalendar.AddWishEventToCalendar.Request(wishEventIndex: indexPath.item))
         }
         
-        // Кнопка отмены
-        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        // Добавление кнопок в UIAlertController
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         
-        // Отображение диалогового окна
         present(alertController, animated: true, completion: nil)
     }
 }

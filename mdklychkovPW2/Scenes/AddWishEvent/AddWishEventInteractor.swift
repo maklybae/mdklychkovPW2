@@ -17,7 +17,7 @@ final class AddWishEventInteractor: AddWishEventBuisnessLogic {
     }
     
     func addWishEvent(_ request: AddWishEvent.AddWishEvent.Request) {
-        if request.wishEventFromFields.endDate > request.wishEventFromFields.startDate || request.wishEventFromFields.title.isEmpty {
+        if request.wishEventFromFields.endDate < request.wishEventFromFields.startDate || request.wishEventFromFields.title.isEmpty {
             return
         }
         
