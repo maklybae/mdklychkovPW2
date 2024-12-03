@@ -18,7 +18,7 @@ final class WishCalendarPresenter: WishCalendarPresentaionLogic {
     }
     
     func routeToAddWishEvent(_ response: WishCalendar.RouteToAddWishEvent.Response) {
-        response.navigationController?.pushViewController(WishStoringAssembly.build(withColor: response.backgroundColor), animated: true) // change
+        response.navigationController?.pushViewController(AddWishEventAssembly.build(withColor: response.backgroundColor), animated: true)
     }
     
     // MARK: - Private funcs

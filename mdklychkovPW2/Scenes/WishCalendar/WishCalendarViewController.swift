@@ -36,8 +36,13 @@ final class WishCalendarViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         configureNavBar()
         configureCollection()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        fetchWishEvents()
     }
     
     private func configureNavBar() {
@@ -74,8 +79,6 @@ final class WishCalendarViewController: UIViewController {
         collectionView.pinHorizontal(to: view)
         collectionView.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor)
         collectionView.pinTop(to: view.safeAreaLayoutGuide.topAnchor, Constants.collectionTop)
-        
-        fetchWishEvents()
     }
     
     private func fetchWishEvents() {
@@ -84,7 +87,9 @@ final class WishCalendarViewController: UIViewController {
     
     @objc
     private func addButtonPressed() {
-        
+        interactor.routeToAddWishEvent(WishCalendar.RouteToAddWishEvent.Request(
+            navigationController: navigationController,
+            backgroundColor: view.backgroundColor ?? .black))
     }
     
     public func presentFetchedWishEvents(_ viewModel: WishCalendar.FetchWishEvents.ViewModel) {
